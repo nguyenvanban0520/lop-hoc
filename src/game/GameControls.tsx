@@ -7,7 +7,7 @@ import { ENGLISH_ONLY } from './mode';
 // Nút riêng của Lớp Học Chữ ở trang điều khiển: điều khiển ván + giả lập phòng đông để thử bot
 const HO = ['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Hoàng', 'Vũ', 'Đặng', 'Bùi'];
 const TEN = ['Lan Anh', 'Minh Tuấn', 'Thu Trang', 'Quốc Bảo', 'Ngọc Hân', 'Gia Huy', 'Khánh Linh', 'Hải Yến', 'Đức Anh', 'Bảo Ngọc', 'Thanh Hà', 'Văn Toàn'];
-const CHAT = ['khó quá cô ơi', 'chữ gì vậy trời', 'hay quá', 'vào lớp', 'cô xinh quá', 'ủa là gì', '???', 'hihi'];
+const CHAT = ['khó quá chú ơi', 'chữ gì vậy trời', 'hay quá', 'vào lớp', 'chú xinh quá', 'ủa là gì', '???', 'hihi'];
 const fake = (i: number) => ({ username: `hs${i}`, nickname: `${HO[i % HO.length]} ${TEN[i % TEN.length]}`, avatar: '' });
 const shuffleWord = (w: string) => [...w].sort(() => Math.random() - 0.5).join('');
 
@@ -48,7 +48,7 @@ export function GameControls({ view, stageCount = 0 }: { view: StageView | null;
       {view && (
         <div className="rounded-lg bg-slate-800 p-3 text-sm leading-6">
           <div>
-            {view.vocabularyMode ? '📚 Từ Vựng · ' : ''}Ván {view.round} · câu {view.qNo}/{view.total} · {view.phase}
+            {view.hackMode ? '🧠 Hack Não · ' : view.vocabularyMode ? '📚 Từ Vựng · ' : ''}Ván {view.round} · câu {view.qNo}/{view.total} · {view.phase}
           </div>
           <div>
             Đáp án (chỉ mình thấy): <b className="text-amber-300">{view.answer || '—'}</b>
@@ -100,16 +100,17 @@ export function GameControls({ view, stageCount = 0 }: { view: StageView | null;
         <Btn onClick={() => emitTest('gift', { ...fake(3), giftName: 'Hoa hồng', giftId: 1, diamondCount: 1, repeatCount: 1 })}>🌹 Tặng hoa</Btn>
         <Btn onClick={() => emitTest('gift', { ...fake(4), giftName: 'Mũ', giftId: 2, diamondCount: 99, repeatCount: 1 })}>🎁 Quà to</Btn>
         <Btn onClick={() => emitTest('like', { ...fake(5), likeCount: 300 })}>❤️ 300 tim</Btn>
-        <Btn onClick={() => emitTest('chat', { ...fake(Math.floor(Math.random() * 50)), comment: 'hôm nay sinh nhật con cô ơi' })}>🎂 Thử: 1 bạn báo sinh nhật</Btn>
+        <Btn onClick={() => emitTest('chat', { ...fake(Math.floor(Math.random() * 50)), comment: 'hôm nay sinh nhật con chú ơi' })}>🎂 Thử: 1 bạn báo sinh nhật</Btn>
         <Btn onClick={() => sendControl('custom', 'recess:rps')}>✊ Ra chơi: oẳn tù tì</Btn>
         <Btn onClick={() => sendControl('custom', 'recess:callup')}>📢 Ra chơi: kiểm tra miệng</Btn>
         <Btn onClick={() => sendControl('custom', 'recess:pick')}>⚖️ Ra chơi: chọn phe</Btn>
         <Btn onClick={() => sendControl('custom', 'recess:roll')}>🙋 Ra chơi: điểm danh</Btn>
         <Btn onClick={() => sendControl('custom', 'recess:heart')}>❤️ Ra chơi: thả tim</Btn>
         <Btn onClick={() => sendControl('custom', 'vocabulary')}>📚 Game: Từ Vựng</Btn>
+        <Btn onClick={() => sendControl('custom', 'hack')}>🧠 Game: Hack Não</Btn>
         {!ENGLISH_ONLY && <>
         <Btn onClick={() => sendControl('custom', 'classroom')}>🏫 Game: Lớp Học Chữ</Btn>
-        <Btn onClick={() => sendControl('custom', 'show:everest')}>🏔️ Game: Đường lên đỉnh Everest</Btn>
+        <Btn onClick={() => sendControl('custom', 'show:everest')}>🏔️ Game: Đường lên đỉnh Fansipan</Btn>
         <Btn onClick={() => sendControl('custom', 'show:chuong')}>🔔 Game: Rung Chuông Đồng</Btn>
         <Btn onClick={() => Array.from({ length: 10 }, (_, i) => emitTest('chat', { ...fake(i), comment: view?.show?.step === 'stake' ? ['10', '20'][i % 2] : 'ABCD'[Math.floor(Math.random() * 4)] }))}>
           🎲 Thử game: 10 bạn gõ A/B/C/D

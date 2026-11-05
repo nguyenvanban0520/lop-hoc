@@ -1,0 +1,5 @@
+# Hack Não
+# Cấu trúc: ĐÁP ÁN | gợi ý | độ khó 1-3 | đáp án khác (nếu có) | thứ tự chữ xáo trộn (nếu muốn cố định)
+# Bỏ trống cột cuối để game tự xáo chữ ngẫu nhiên.
+> Đây là một món ăn.
+MỨT CÓC | Một món ăn | 2 | | M Ó C C Ứ T

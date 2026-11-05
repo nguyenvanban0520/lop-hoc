@@ -6,7 +6,7 @@ import { parseCodes, parseMc, type ShowBank } from './show';
 const files = import.meta.glob('./cau-hoi/*.txt', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
 const allQuestions = parseBank(files);
-export const QUESTIONS = ENGLISH_ONLY ? allQuestions.filter((q) => q.slot === 'anh') : allQuestions;
+export const QUESTIONS = ENGLISH_ONLY ? allQuestions.filter((q) => q.slot === 'anh' || q.slot === 'hack') : allQuestions;
 
 // 2 game lớn (bản riêng): câu trắc nghiệm + mật mã
 const show = import.meta.glob('./cau-hoi-show/*.txt', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;

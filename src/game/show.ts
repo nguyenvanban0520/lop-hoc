@@ -1,4 +1,4 @@
-// Bộ câu cho 2 game lớn (bản riêng cô Ngân): Đường lên đỉnh Everest và Rung Chuông Đồng.
+// Bộ câu cho 2 game lớn (bản riêng chú PAN): Đường lên đỉnh Fansipan và Rung Chuông Đồng.
 // Câu trắc nghiệm ở src/game/cau-hoi-show/trac-nghiem.txt, mật mã (3 gợi ý) ở mat-ma.txt.
 // Kiểm tra: npx tsx src/game/bank.check.ts
 import { plain } from './quiz';

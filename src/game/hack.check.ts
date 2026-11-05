@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { parseBank } from './questions';
+import { Classroom } from './quiz';
+
+const errors: string[] = [];
+const bank = parseBank({ 'hack-nao.txt': fs.readFileSync(new URL('./cau-hoi/hack-nao.txt', import.meta.url), 'utf8') }, errors);
+assert.deepEqual(errors, []);
+assert.equal(bank[0].answer, 'MỨT CÓC');
+assert.equal(bank[0].difficulty, 'medium');
+assert.equal(bank[0].slot, 'hack');
+const room = new Classroom(bank, 1000);
+room.forceHack(1000);
+for (let i = 0; i < 10 && !room.q; i++) room.tick(room.phaseEndsAt + 1);
+assert.equal(room.q?.answer, 'MỨT CÓC');
+assert.equal(room.tiles.join(' '), 'M Ó C C Ứ T');
+assert.equal(room.view(room.phaseStartedAt).total, 1);
+room.showBoard(room.phaseStartedAt);
+room.chat({ username: 'test', nickname: 'Bạn', spoken: 'bạn', avatar: '', comment: 'mứt cóc', createTime: room.phaseStartedAt + 1000 }, room.phaseStartedAt + 1000);
+assert.equal(room.correct.length, 1);
+const bad: string[] = [];
+parseBank({ 'hack-nao.txt': 'MỨT CÓC | Một món ăn | 2 | | M O C' }, bad);
+assert.equal(bad.length, 1);
+console.log('hack.check: đúng file riêng, thứ tự M Ó C C Ứ T, chấm MỨT CÓC và kiểm tra chữ xáo trộn');

@@ -19,7 +19,7 @@ interface Line {
   keep?: boolean; // không bỏ dù chờ lâu (lời dẫn khai mạc dài)
 }
 
-// M nam, F nữ, E tiếng Anh (cô đọc từ tiếng Anh)
+// M nam, F nữ, E tiếng Anh (chú đọc từ tiếng Anh)
 type Who = 'M' | 'F' | 'E';
 
 const MAX_WAIT_MS = 60_000;
@@ -82,7 +82,7 @@ class Voice {
 
   // "M: Trời ơi! | ^Hoan hô!" -> từng đoạn: ai nói (M nam, F nữ), có hô to không
   private parts(text: string) {
-    // Lớp Học Chữ: chỉ có cô Ngân nói, câu không ghi "M:"/"F:" (vd chủ kênh gõ cho cô đọc) cũng là giọng nữ (2026-11-04)
+    // Lớp Học Chữ: chỉ có chú PAN nói, câu không ghi "M:"/"F:" (vd chủ kênh gõ cho chú đọc) cũng là giọng nữ (2026-11-04)
     let who: Who = 'F';
     const out: { who: Who; hype: boolean; text: string }[] = [];
     for (let raw of text.split('|')) {
@@ -120,7 +120,7 @@ class Voice {
     line.start?.();
     try {
       for (const part of this.parts(line.text)) {
-        this.onSpeaker?.(part.who === 'E' ? 'F' : part.who); // giọng tiếng Anh là cô đọc
+        this.onSpeaker?.(part.who === 'E' ? 'F' : part.who); // giọng tiếng Anh là chú đọc
         const audio = new Audio(this.urlOf(part));
         audio.volume = this.volume;
         this.current = audio;
@@ -176,7 +176,7 @@ class Voice {
 function readRate() {
   try {
     const r = Number(localStorage.getItem('voice-rate'));
-    return r >= 0.5 && r <= 1.5 ? r : 1.0; // cô Ngân đọc tốc độ thường (chủ kênh 2026-11-04: 1.1 hơi nhanh); chỉnh ở trang điều khiển
+    return r >= 0.5 && r <= 1.5 ? r : 1.0; // chú PAN đọc tốc độ thường (chủ kênh 2026-11-04: 1.1 hơi nhanh); chỉnh ở trang điều khiển
   } catch {
     return 1.0;
   }

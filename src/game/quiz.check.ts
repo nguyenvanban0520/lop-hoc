@@ -15,7 +15,7 @@ const mk = (answer: string, d: Question['difficulty'] = 'easy', id = answer): Qu
 const who = (i: number) => ({ username: `u${i}`, nickname: `Bạn ${i}`, spoken: `Bạn ${i}`, avatar: '' });
 const chat = (c: Classroom, i: number, comment: string, createTime: number, now: number) => c.chat({ ...who(i), comment, createTime }, now);
 let t = 1_000_000;
-// các test cũ chạy không có giờ chọn tổ (bản cô Ngân); phần chia tổ test riêng ở cuối file
+// các test cũ chạy không có giờ chọn tổ (bản chú PAN); phần chia tổ test riêng ở cuối file
 const TEAM_SEC = GAME.teamPickSec;
 GAME.teamPickSec = 0;
 // các test cũ viết cho nhịp cũ; chế độ nhanh (2026-11-04) test riêng ở cuối file
@@ -68,7 +68,7 @@ for (let i = 0; i < 200; i++) {
   assert.ok(!c.correct.some((a) => a.username === 'u5000'));
   chat(c, 5001, 'bang den', t, t); // không dấu không tính
   assert.ok(!c.correct.some((a) => a.username === 'u5001'));
-  for (let i = 0; i < 1000; i++) chat(c, i, i < 300 ? 'Bảng Đen' : 'xin chào cô', t + 5000 - i, t + 10);
+  for (let i = 0; i < 1000; i++) chat(c, i, i < 300 ? 'Bảng Đen' : 'xin chào chú', t + 5000 - i, t + 10);
   assert.equal(c.correct.length, 301);
   assert.equal(c.correct[0].username, 'u299', 'createTime sớm nhất đứng đầu');
   assert.deepEqual(c.correct.slice(0, 4).map((a) => a.points), [10, 7, 5, 3]);
@@ -91,14 +91,14 @@ for (let i = 0; i < 200; i++) {
   assert.ok(c.students.get('u299')!.session >= 10);
 }
 
-// ---------- nhịp giọng: dừng giờ lúc cô đọc, chỉ nói thêm lúc chờ trả lời ----------
+// ---------- nhịp giọng: dừng giờ lúc chú đọc, chỉ nói thêm lúc chờ trả lời ----------
 {
   const c = new Classroom([mk('MÈO'), mk('CHÓ', 'easy', 'cho')], t);
   c.newRound(t);
   assert.ok(!c.chatterWindow(t), 'đang giới thiệu tiết: không chào');
   c.tick((t += GAME.introSec * 1000));
   const end = c.phaseEndsAt;
-  c.hold(4000); // cô đọc đề 4 giây
+  c.hold(4000); // chú đọc đề 4 giây
   assert.equal(c.phaseEndsAt, end + 4000, 'đọc đề xong mới đếm giờ');
   assert.ok(c.chatterWindow(t + 4000), 'đang chờ trả lời: được chào');
   assert.ok(!c.chatterWindow(c.phaseEndsAt - GAME.chatterMinLeftMs + 1), 'sắp hết giờ: không chào');
@@ -171,7 +171,7 @@ for (const q of BANK) {
     if (k === GAME.questionsPerRound - 1) assert.equal(c.correct[0].points, 20);
     c.tick((t += GAME.questionSec * 1000 + 1));
     c.tick((t += GAME.revealSec * 1000));
-    // câu 5, 10, 15: cô dừng lại điểm danh, tặng quà rồi mới ra câu tiếp
+    // câu 5, 10, 15: chú dừng lại điểm danh, tặng quà rồi mới ra câu tiếp
     if ((k + 1) % GAME.praiseEvery === 0 && k + 1 < GAME.questionsPerRound) {
       assert.equal(c.phase, 'praise', `dừng điểm danh sau câu ${k + 1}`);
       assert.equal(c.view(t).praiseTop[0].username, 'u1');
@@ -199,7 +199,7 @@ for (const lv of [1, 2, 3, 4] as const) {
   }
 }
 
-// ---------- đọc đề xong cô hô bắt đầu; còn 5 giây cô nhắc, đồng hồ không dừng ----------
+// ---------- đọc đề xong chú hô bắt đầu; còn 5 giây chú nhắc, đồng hồ không dừng ----------
 {
   const c = new Classroom(BANK, t);
   c.newRound(t);
@@ -208,7 +208,7 @@ for (const lv of [1, 2, 3, 4] as const) {
   assert.ok(LINES.go.includes(start[start.length - 1].text.slice(3)), 'câu cuối lúc ra đề là hô bắt đầu');
   assert.ok(start[start.length - 1].go);
   assert.ok(start.every((l) => l.main));
-  // cô đang đọc đề (đồng hồ dừng): chưa hiện bảng chữ; hô bắt đầu mới hiện
+  // chú đang đọc đề (đồng hồ dừng): chưa hiện bảng chữ; hô bắt đầu mới hiện
   c.hold(3000);
   c.tick(t);
   assert.equal(c.view(t).boardShown, false, 'đang đọc đề: chưa hiện chữ');
@@ -250,13 +250,13 @@ for (const lv of [1, 2, 3, 4] as const) {
 const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1) => {
   const c = new Classroom([mk('MÈO'), mk('CHÓ', 'easy', 'cho')], t, () => seed);
   c.newRound(t);
-  for (let i = 0; i < 5; i++) chat(c, i, 'chào cô', t, t); // vào lớp, vừa hoạt động
+  for (let i = 0; i < 5; i++) chat(c, i, 'chào chú', t, t); // vào lớp, vừa hoạt động
   c.forceRecess(game, t);
   return c;
 };
 {
-  // oẳn tù tì: cô ra theo rand; thắng cô +2 điểm buổi, không đụng điểm tiết
-  const c = recessOf('rps', 0.1); // rand 0.1 -> cô ra "búa"
+  // oẳn tù tì: chú ra theo rand; thắng chú +2 điểm buổi, không đụng điểm tiết
+  const c = recessOf('rps', 0.1); // rand 0.1 -> chú ra "búa"
   chat(c, 1, 'bao', t, t);
   chat(c, 2, 'Kéo', t, t);
   chat(c, 1, 'kéo', t, t); // đổi ý không tính
@@ -313,7 +313,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.equal(c.students.get('u1')!.session, 1);
 }
 
-// ---------- lớp trưởng: đổi người thì cô thông báo ----------
+// ---------- lớp trưởng: đổi người thì chú thông báo ----------
 {
   const c = new Classroom([mk('MÈO'), mk('CHÓ', 'easy', 'cho'), mk('GÀ', 'easy', 'ga')], t);
   c.newRound(t);
@@ -331,7 +331,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   chat(c, 2, c.q!.answer, t, t);
   said.push(...c.tick((t += GAME.questionSec * 1000 + 1)).map((l) => l.text));
   assert.equal(c.view(t).seats.find((x) => x.username === 'u2')!.title, 'lop-truong');
-  assert.ok(said.some((l) => l.includes('Bạn 2') && /lớp trưởng/i.test(l)), 'cô báo lớp trưởng mới');
+  assert.ok(said.some((l) => l.includes('Bạn 2') && /lớp trưởng/i.test(l)), 'chú báo lớp trưởng mới');
 }
 
 // ---------- lớp trưởng chỉ tính điểm tiết này; tiết mới tranh lại từ đầu ----------
@@ -375,7 +375,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   const qs = (c as unknown as { roundQs: Question[] }).roundQs;
   assert.ok(qs.filter((q) => !q.math).every((q) => asked.has(q.id)), 'ôn bài chỉ hỏi câu đã hỏi');
   c.tick((t += GAME.introSec * 1000)); // câu 1 (ôn)
-  chat(c, 1, 'cô ơi', t, t); // có bạn vào
+  chat(c, 1, 'chú ơi', t, t); // có bạn vào
   for (let k = 0; k < 5 && c.qNo < 2; k++) c.tick((t = c.phaseEndsAt));
   assert.equal(c.qNo, 2);
   assert.ok(!c.review, 'có bạn vào: hết ôn bài');
@@ -392,7 +392,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.equal(c.intro(q('CAT', 'Câu tiếng Anh nè.', 'anh')), 'Câu tiếng Anh nè. Đây là một từ tiếng Anh gồm 3 chữ cái.');
 }
 
-// ---------- "ai yêu cô thì gõ số 1": rủ lúc chờ trả lời câu chữ, đếm, cảm ơn ----------
+// ---------- "ai yêu chú thì gõ số 1": rủ lúc chờ trả lời câu chữ, đếm, cảm ơn ----------
 {
   const c = new Classroom([mk('BẢNG ĐEN'), mk('CÁI BÀN', 'easy', 'ban')], t);
   t += GAME.engageEveryMs; // đã lâu chưa rủ
@@ -401,7 +401,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   c.tick((t += GAME.introSec * 1000));
   c.showBoard();
   const call = c.tick(t);
-  assert.ok(call.some((l) => LINES.loveCall.includes(l.text.slice(3))), 'cô rủ gõ số 1');
+  assert.ok(call.some((l) => LINES.loveCall.includes(l.text.slice(3))), 'chú rủ gõ số 1');
   assert.ok(call.every((l) => !l.main), 'câu nói thêm, không dừng đồng hồ');
   chat(c, 1, '1', t + 1000, t + 1000);
   chat(c, 1, '1', t + 1000, t + 1000); // gõ 2 lần chỉ tính 1
@@ -409,7 +409,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.equal(c.view(t).loveFans, 2);
   assert.equal(c.correct.length + c.view(t).stats.attempts, 0, 'gõ số 1 không bị tính là trả lời');
   const thanks = c.tick((t += GAME.loveWindowMs));
-  assert.ok(thanks.some((l) => l.text.includes('2 bạn') || l.text.includes('2 bạn nhỏ')), 'cô cảm ơn kèm số bạn');
+  assert.ok(thanks.some((l) => l.text.includes('2 bạn') || l.text.includes('2 bạn nhỏ')), 'chú cảm ơn kèm số bạn');
   assert.equal(c.love, null);
 
   // lượt sau: kể chuyện vui; lượt sau nữa: bình chọn, đếm phiếu, đọc kết quả
@@ -421,9 +421,9 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
     c.showBoard();
     return c.tick(t);
   };
-  assert.ok(nextTurn().some((l) => LINES.funFact.includes(l.text.slice(3))), 'cô kể chuyện vui');
+  assert.ok(nextTurn().some((l) => LINES.funFact.includes(l.text.slice(3))), 'chú kể chuyện vui');
   const ask = nextTurn();
-  assert.ok(c.poll, 'cô hỏi bình chọn');
+  assert.ok(c.poll, 'chú hỏi bình chọn');
   assert.ok(ask.some((l) => POLLS.some((p) => p.ask === l.text.slice(3))));
   const [a, b] = c.poll!.opts;
   chat(c, 1, a.key.toUpperCase(), t, t);
@@ -433,7 +433,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.equal(c.view(t).poll!.find((o) => o.key === a.key)!.n, 2);
   assert.equal(c.view(t).stats.attempts, 0, 'gõ 1 chữ không bị tính là trả lời');
   const result = c.tick((t += GAME.loveWindowMs));
-  assert.ok(result.some((l) => l.text.includes(a.label) && l.text.includes('2')), 'cô đọc kết quả bình chọn');
+  assert.ok(result.some((l) => l.text.includes(a.label) && l.text.includes('2')), 'chú đọc kết quả bình chọn');
 }
 
 // ---------- học sinh tương tác: bong bóng chat, tặng hoa đi lên bục, phạt lên bục, ngủ gật ----------
@@ -442,8 +442,8 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   c.newRound(t);
   c.tick((t += GAME.introSec * 1000));
   const seat = (u: string) => c.view(t).seats.find((s) => s.username === u)!;
-  chat(c, 1, 'cô ơi con đói', t, t);
-  assert.equal(seat('u1').bubble, 'cô ơi con đói', 'bình luận thường hiện bong bóng');
+  chat(c, 1, 'chú ơi con đói', t, t);
+  assert.equal(seat('u1').bubble, 'chú ơi con đói', 'bình luận thường hiện bong bóng');
   chat(c, 2, 'X'.repeat(c.answerLetters.length), t, t); // trả lời sai: không hiện (dài bằng đáp án)
   assert.equal(seat('u2').bubble, '', 'câu trả lời không hiện bong bóng (lộ đáp án)');
   c.chat({ ...who(3), comment: 'tục tĩu', createTime: t, safe: false }, t);
@@ -457,10 +457,10 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   // trả lời sai bị trêu + phạt lên bục đứng
   const said = c.tick((t = c.phaseEndsAt));
   for (let k = 0; k < 3 && c.phase !== 'reveal'; k++) said.push(...c.tick((t = c.phaseEndsAt)));
-  assert.ok(said.some((l) => LINES.roastStand.some((f) => f('Bạn 2') === l.text.slice(3))), 'cô phạt lên bục');
-  assert.ok(c.view(t).punished.some((p) => p.username === 'u2'), 'gõ sai lên đứng cạnh cô');
+  assert.ok(said.some((l) => LINES.roastStand.some((f) => f('Bạn 2') === l.text.slice(3))), 'chú phạt lên bục');
+  assert.ok(c.view(t).punished.some((p) => p.username === 'u2'), 'gõ sai lên đứng cạnh chú');
   assert.ok(seat('u2').standing);
-  assert.equal(c.view(t).punished[0].left, GAME.standQuestions, 'gõ sai đứng cạnh cô 3 câu');
+  assert.equal(c.view(t).punished[0].left, GAME.standQuestions, 'gõ sai đứng cạnh chú 3 câu');
   // ngồi im lâu: ngủ gật
   assert.ok(c.view(t + GAME.sleepAfterMs + 1).seats.every((s) => s.sleeping));
 }
@@ -472,7 +472,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   chat(c, 2, 'hi', t + 1000, t + 1000);
   assert.equal(c.seats()[0].username, 'u1', 'cùng điểm, cùng còn ở: ai vào trước ngồi trước');
   t += GAME.seatActiveMs + 5000;
-  chat(c, 2, 'cô ơi', t, t);
+  chat(c, 2, 'chú ơi', t, t);
   c.tick(t);
   assert.equal(c.seats()[0].username, 'u2', 'bạn im lâu nhường ghế cho bạn đang tương tác');
 }
@@ -496,7 +496,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   const bad = c.q!;
   chat(c, 1, bad.answer, t, t);
   const said = c.banCurrent(t);
-  assert.ok(said.some((l) => LINES.banned.includes(l.text.slice(3))), 'cô nói bỏ câu');
+  assert.ok(said.some((l) => LINES.banned.includes(l.text.slice(3))), 'chú nói bỏ câu');
   assert.equal(c.qNo, 2, 'sang câu tiếp liền');
   assert.equal(c.students.get('u1')!.score, 0, 'câu bị bỏ không tính điểm');
   assert.deepEqual(c.banLog.map((b) => b.id), [bad.id]);
@@ -535,7 +535,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   const c = new Classroom(BANK, t);
   c.newRound(t);
   assert.equal(chat(c, 1, 'chúc mừng sinh nhật bạn ấy', t, t).length, 0, 'chúc người khác thì không tính');
-  const said = chat(c, 1, 'Hôm nay sinh nhật con cô ơi', t, t);
+  const said = chat(c, 1, 'Hôm nay sinh nhật con chú ơi', t, t);
   assert.equal(said.length, 1);
   assert.ok(said[0].priority && !said[0].main, 'nói chen lúc chờ trả lời, không cắt ngang đề');
   assert.equal(c.students.get('u1')!.desk.at(-1)!.icon, '🎂');
@@ -546,7 +546,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.equal(chat(c, 2, 'sinh nhật mình nè', t + 120_000, t + 120_000).length, 1);
 }
 
-// ---------- chuyên cần: ngày thứ 2 cô nhận ra, mốc đẹp thì có quà ----------
+// ---------- chuyên cần: ngày thứ 2 chú nhận ra, mốc đẹp thì có quà ----------
 {
   const c = new Classroom(BANK, t);
   assert.equal(c.attendance(who(1), 1, t).length, 0, 'ngày đầu: chưa nói gì');
@@ -592,7 +592,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   );
 }
 
-// ---------- chia tổ (bản cô Ngân): 45 giây chọn tổ, ai chưa chọn máy xếp, bạn vào giữa tiết xếp ngay ----------
+// ---------- chia tổ (bản chú PAN): 45 giây chọn tổ, ai chưa chọn máy xếp, bạn vào giữa tiết xếp ngay ----------
 {
   GAME.teamPickSec = TEAM_SEC;
   assert.equal(teamOf('tổ 2'), 2);
@@ -601,9 +601,9 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.equal(teamOf('1'), 1);
   assert.equal(teamOf('tổ ba'), 3);
   assert.equal(teamOf('tổ 5'), 0);
-  assert.equal(teamOf('chào cô'), 0);
+  assert.equal(teamOf('chào chú'), 0);
   const c = new Classroom([mk('MÈO'), mk('CHÓ', 'easy', 'cho')], t, () => 0.1);
-  chat(c, 1, 'chào cô', t, t); // vào trước khi mở tiết: đã được xếp tổ, vẫn đổi được trong giờ chọn
+  chat(c, 1, 'chào chú', t, t); // vào trước khi mở tiết: đã được xếp tổ, vẫn đổi được trong giờ chọn
   c.newRound(t);
   assert.equal(c.phase, 'team');
   chat(c, 1, 'tổ 3', t, t);
@@ -613,7 +613,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   for (let i = 4; i < 10; i++) chat(c, i, 'hello', t, t); // 6 bạn không chọn
   assert.equal(c.view(t).noTeam, 6);
   const remind = c.tick((t = c.phaseEndsAt - GAME.teamRemindLeftSec * 1000));
-  assert.ok(remind.some((l) => l.text.includes('Tổ 3 2 bạn')), 'còn 15 giây cô đọc số bạn mỗi tổ');
+  assert.ok(remind.some((l) => l.text.includes('Tổ 3 2 bạn')), 'còn 15 giây chú đọc số bạn mỗi tổ');
   const close = c.tick((t = c.phaseEndsAt));
   assert.equal(c.phase, 'intro');
   assert.ok(close.some((l) => l.text.includes('6 bạn chưa chọn')));
@@ -623,7 +623,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.ok([...st.values()].every((s) => s.team >= 1 && s.team <= 4), 'không sót ai');
   const sizes = c.teamStats(t).map((x) => x.members);
   assert.ok(Math.max(...sizes) - Math.min(...sizes) <= 1, `chia đều: ${sizes}`);
-  chat(c, 50, 'hi cô', t, t); // vào giữa tiết: xếp ngay
+  chat(c, 50, 'hi chú', t, t); // vào giữa tiết: xếp ngay
   assert.ok(st.get('u50')!.team > 0);
   // bạn tổ 3 trả lời đúng -> cuối tiết tổ 3 thắng cờ
   c.tick((t = c.phaseEndsAt));
@@ -658,14 +658,14 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   const said: string[] = [];
   for (let k = 0; k < 4 && c.phase !== 'reveal'; k++) said.push(...c.tick((t = c.phaseEndsAt)).map((l) => l.text));
   said.push(...c.tick((t += 200)).map((l) => l.text)); // câu chúc nói ở nhịp kế
-  assert.ok(said.some((x) => x.includes('lớp 2')), 'cô chúc lên lớp 2');
-  assert.ok(said.some((x) => x.includes('Học sinh chăm chỉ')), 'cô báo huy hiệu mới');
+  assert.ok(said.some((x) => x.includes('lớp 2')), 'chú chúc lên lớp 2');
+  assert.ok(said.some((x) => x.includes('Học sinh chăm chỉ')), 'chú báo huy hiệu mới');
   assert.equal(c.view(t).seats.find((s) => s.username === 'u1')!.grade, 2);
   assert.ok(c.students.get('u1')!.desk.some((g) => g.icon === '🎓'));
   const d = c.lifeDelta.get('u1')!;
   assert.equal(d.total, 1, 'chờ gửi server: 1 câu đúng');
   assert.ok(d.points >= 10);
-  // gõ "học bạ": cô đọc lớp, điểm, huy hiệu; gõ lại liền thì thôi
+  // gõ "học bạ": chú đọc lớp, điểm, huy hiệu; gõ lại liền thì thôi
   const card = chat(c, 1, 'học bạ', (t += 1000), t);
   assert.ok(card[0].text.includes('lớp 2') && card[0].text.includes('Học sinh chăm chỉ'));
   assert.equal(chat(c, 1, 'hoc ba', (t += 1000), t).length, 0);
@@ -706,13 +706,13 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.equal(c.view(t).walk!.tier, 0);
   const big = c.gift(who(2), 99, t + 1000, 1); // đang có bạn đi lên: không cận cảnh chen, nhưng vẫn vào quỹ
   assert.ok(!big.some((l) => l.text.includes('bó hoa thật to')));
-  // 1 món vượt nhiều mốc (47 -> 147 qua 50 và 100): cô báo mốc cao nhất
-  assert.ok(big.some((l) => l.text.includes(String(GAME.flowerGoals.filter((g) => g <= GAME.flowerGoals[0] - 3 + 1 + 99).pop()))), 'qua mốc quỹ hoa: cô cảm ơn cả lớp');
+  // 1 món vượt nhiều mốc (47 -> 147 qua 50 và 100): chú báo mốc cao nhất
+  assert.ok(big.some((l) => l.text.includes(String(GAME.flowerGoals.filter((g) => g <= GAME.flowerGoals[0] - 3 + 1 + 99).pop()))), 'qua mốc quỹ hoa: chú cảm ơn cả lớp');
   const v = c.view(t + 1000);
   assert.equal(v.fund.today, GAME.flowerGoals[0] - 3 + 1 + 99);
   assert.equal(v.fund.goal, GAME.flowerGoals.find((g) => g > v.fund.today));
   assert.equal(v.fund.party, GAME.flowerGoals.filter((g) => g <= v.fund.today).pop());
-  assert.deepEqual(v.gifts.map((g) => g.tier), [0, 2], 'quà bày trên bàn sau lưng cô theo bậc');
+  assert.deepEqual(v.gifts.map((g) => g.tier), [0, 2], 'quà bày trên bàn sau lưng chú theo bậc');
   assert.equal(c.flowerDelta, 100, 'chờ gửi server 100 bông');
   // server trả số đã lưu: giữ phần chưa gửi
   c.flowerDelta = 0;
@@ -726,7 +726,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   c.newRound(t);
   c.tick((t += GAME.introSec * 1000));
   const start = t;
-  c.hold(3000); // cô đọc đề 3 giây: chưa tính giờ
+  c.hold(3000); // chú đọc đề 3 giây: chưa tính giờ
   const skew = 1500; // đồng hồ TikTok chậm hơn máy 1,5 giây
   const at = (sec: number) => start + 3000 + sec * 1000; // giờ máy lúc người xem gửi
   // 7 bạn đúng, tới lệch thứ tự; bạn 9 gửi sớm nhất
@@ -753,7 +753,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.deepEqual(c.correct.slice(5).map((a) => a.points), [1, 1], 'chậm hơn top 5: +1');
 }
 
-// ---------- 2 game lớn (bản cô Ngân): Đường lên đỉnh Everest, Rung Chuông Đồng ----------
+// ---------- 2 game lớn (bản chú PAN): Đường lên đỉnh Fansipan, Rung Chuông Đồng ----------
 {
   const sdir = path.join(import.meta.dirname, 'cau-hoi-show');
   const SHOW = { mc: parseMc(fs.readFileSync(path.join(sdir, 'trac-nghiem.txt'), 'utf8')), codes: parseCodes(fs.readFileSync(path.join(sdir, 'mat-ma.txt'), 'utf8')) };
@@ -766,7 +766,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   type Sh = { steps: { k: string; tag?: string }[]; i: number; stage: string; mc: { ans: number; tag: string } | null; code: { answer: string } | null; tickets: Set<string>; scores: Map<string, number> };
   const sh = (c: Classroom) => (c as unknown as { show: Sh }).show;
   const step = (c: Classroom) => sh(c).steps[sh(c).i];
-  /** chạy tới bước kế tiếp đang chờ trả lời (cô đã hô bắt đầu) */
+  /** chạy tới bước kế tiếp đang chờ trả lời (chú đã hô bắt đầu) */
   const toAsk = (c: Classroom) => {
     for (let k = 0; k < 20; k++) {
       if (c.phase !== 'show' || step(c).k === 'honor') return;
@@ -780,13 +780,13 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   };
   const wrongOf = (a: number) => 'ABCD'[(a + 1) % 4];
 
-  // --- Everest ---
+  // --- Fansipan ---
   const c = new Classroom(BANK, t, () => 0.3);
   c.showBank = SHOW;
   for (let i = 1; i <= 4; i++) chat(c, i, 'hi', t, t);
   c.forceShow('everest', t);
   assert.equal(c.phase, 'show');
-  assert.equal(c.view(t).outfit, 'everest', 'chơi Everest thì mặc đồ leo núi');
+  assert.equal(c.view(t).outfit, 'everest', 'chơi Fansipan thì mặc đồ leo núi');
   // bước chân đầu tiên: 4 câu, đúng +10, mỗi người 1 đáp án, chưa hô bắt đầu thì chưa nhận
   for (let q = 0; q < 4; q++) {
     toAsk(c);
@@ -794,7 +794,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
     const a = sh(c).mc!.ans;
     if (q === 0) {
       (c as unknown as { boardShown: boolean }).boardShown = false;
-      chat(c, 4, 'ABCD'[a], t, t); // cô chưa hô bắt đầu: không tính
+      chat(c, 4, 'ABCD'[a], t, t); // chú chưa hô bắt đầu: không tính
       c.showBoard();
     }
     chat(c, 1, 'ABCD'[a], t, t);
@@ -805,7 +805,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   }
   assert.equal(sh(c).scores.get('u1'), 40);
   assert.equal(sh(c).scores.get('u2') ?? 0, 0);
-  assert.equal(sh(c).scores.get('u4') ?? 0, 0, 'gõ trước khi cô hô bắt đầu không tính');
+  assert.equal(sh(c).scores.get('u4') ?? 0, 0, 'gõ trước khi chú hô bắt đầu không tính');
   assert.equal(c.students.get('u1')!.session, 40, 'điểm game lớn vào điểm buổi / học bạ');
   // mật mã: bạn 3 giải ở gợi ý 2 được 20, bạn 1 đoán sai ở gợi ý 1 rồi giải ở gợi ý 2
   toAsk(c);
@@ -848,7 +848,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.equal(step(c).k, 'honor');
   const hv = c.view(t).show!;
   assert.equal(hv.honors[0].username, 'u1');
-  assert.ok(hv.honors[0].title.includes('Everest'));
+  assert.ok(hv.honors[0].title.includes('Fansipan'));
   assert.ok(c.view(t).seats.find((s) => s.username === 'u1')!.showIcons.includes('🚩'), 'danh hiệu hiện trên bảng tên');
   c.tick((t = c.phaseEndsAt));
   assert.equal(c.phase, 'vote', 'xong game thì bình chọn chủ đề tiết sau');
@@ -866,7 +866,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
     if (m) {
       if (m.tag === 'final' && sh(d).tickets.has('u2') && !d.view(t).show!.ticketUser) {
         const said = chat(d, 2, 'gợi ý', t, t);
-        assert.ok(said.some((l) => l.warn), 'dùng phiếu: cô nói liền, không dừng đồng hồ');
+        assert.ok(said.some((l) => l.warn), 'dùng phiếu: chú nói liền, không dừng đồng hồ');
         assert.equal(d.view(t).show!.removed.length, 2);
         assert.ok(!d.view(t).show!.removed.includes(m.ans), 'chỉ bỏ đáp án sai');
       }
@@ -901,23 +901,23 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
     e.newRound((t += 1000));
     const before = e.outfit;
     for (let k = 0; k < 200 && e.phase !== 'results'; k++) e.tick((t = e.phaseEndsAt));
-    assert.notEqual(e.outfit, before, 'hết 20 câu thì cô thay trang phục');
+    assert.notEqual(e.outfit, before, 'hết 20 câu thì chú thay trang phục');
     outfits.add(e.outfit);
     e.tick((t = e.phaseEndsAt));
     if (e.phase === 'show') kinds.push(e.show!.kind);
     else assert.equal(e.phase, 'recess');
   }
-  assert.deepEqual(kinds, ['everest', 'chuong'], 'tiết 2 Everest, tiết 4 Rung Chuông Đồng');
-  // bảng sự kiện: tiết 1 báo "sau tiết 2", tiết 2 báo "hết tiết này là tới" + cô báo trước bằng giọng
+  assert.deepEqual(kinds, ['everest', 'chuong'], 'tiết 2 Fansipan, tiết 4 Rung Chuông Đồng');
+  // bảng sự kiện: tiết 1 báo "sau tiết 2", tiết 2 báo "hết tiết này là tới" + chú báo trước bằng giọng
   const f = new Classroom(BANK, t, () => 0.5);
   f.showBank = SHOW;
   f.newRound((t += 1000));
-  assert.deepEqual(f.nextShow(), { kind: 'everest', name: 'Đường lên đỉnh Everest', afterRound: 2, now: false, soon: false });
+  assert.deepEqual(f.nextShow(), { kind: 'everest', name: 'Đường lên đỉnh Fansipan', afterRound: 2, now: false, soon: false });
   for (let k = 0; k < 200 && f.phase !== 'recess'; k++) f.tick((t = f.phaseEndsAt));
   assert.equal(f.nextShow()!.afterRound, 2, 'ra chơi tiết 1: phiên tới vẫn sau tiết 2');
   const intro2 = f.newRound((t += 1000));
   assert.ok(f.nextShow()!.soon);
-  assert.ok(intro2.some((l) => LINES.showSoon.some((fn) => l.text.includes(fn('Đường lên đỉnh Everest')))), 'đầu tiết 2 cô báo hết tiết là tới Everest');
+  assert.ok(intro2.some((l) => LINES.showSoon.some((fn) => l.text.includes(fn('Đường lên đỉnh Fansipan')))), 'đầu tiết 2 chú báo hết tiết là tới Fansipan');
   assert.ok([...outfits].every((o) => (GAME.outfits as readonly string[]).includes(o)));
 }
 
@@ -940,21 +940,21 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   for (let i = 1; i <= 4; i++) assert.equal(c.students.get(`u${i}`)!.streak, 5);
 }
 
-// ---------- quà trong bảng "Gửi tặng cô": cô cảm ơn đúng tên món, bạn nhỏ cầm đúng món, bày đúng món ----------
+// ---------- quà trong bảng "Gửi tặng chú": chú cảm ơn đúng tên món, bạn nhỏ cầm đúng món, bày đúng món ----------
 {
   const c = new Classroom([mk('BẢNG ĐEN')], t);
   c.newRound(t);
   const said = c.gift(who(1), 30, t, 1, 'Doughnut');
-  assert.ok(said.some((l) => LINES.thankDonut.some((f) => f('Bạn 1') === l.text.slice(3))), 'bánh donut: cô đáp lời riêng của món');
+  assert.ok(said.some((l) => LINES.thankDonut.some((f) => f('Bạn 1') === l.text.slice(3))), 'bánh donut: chú đáp lời riêng của món');
   assert.equal(c.view(t).walk!.icon, '🍩');
   const heart = c.gift(who(3), 5, t + 2 * GAME.walkMs, 1, 'Finger Heart');
-  assert.ok(heart.some((l) => LINES.thankHeart.some((f) => f('Bạn 3') === l.text.slice(3))), 'bắn tim: cô đáp "bắn trúng tim cô"...');
+  assert.ok(heart.some((l) => LINES.thankHeart.some((f) => f('Bạn 3') === l.text.slice(3))), 'bắn tim: chú đáp "bắn trúng tim chú"...');
   assert.equal(c.view(t).gifts[0].icon, '🍩');
   c.gift(who(2), 3, t + GAME.walkMs + 1, 1, 'Quà lạ');
   assert.equal(c.view(t + GAME.walkMs + 1).gifts[2].icon, GAME.giftTiers[0].icon, 'quà khác: icon theo bậc như cũ');
 }
 
-// ---------- gửi đáp án lúc cô còn đọc nhưng bình luận tới trễ (sau khi bảng hiện): không tính, không mất lượt ----------
+// ---------- gửi đáp án lúc chú còn đọc nhưng bình luận tới trễ (sau khi bảng hiện): không tính, không mất lượt ----------
 {
   Object.assign(GAME, FAST);
   const c = new Classroom(BANK, t);
@@ -962,12 +962,12 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   while (c.phase !== 'question') c.tick((t += 500));
   while (c.q!.math || c.q!.slot === 'meo') c.tick((t += 500)); // câu chữ (đáp án dài) cho dễ thử
   const delay = 1000; // bình luận TikTok tới máy trễ 1 giây
-  chat(c, 801, 'chào cô', t - delay, t); // vài bình luận thường để đo độ lệch đồng hồ
+  chat(c, 801, 'chào chú', t - delay, t); // vài bình luận thường để đo độ lệch đồng hồ
   chat(c, 802, 'hay quá', t - delay, t);
   const shownAt = t + 2000;
   c.showBoard(shownAt);
   t = shownAt + 300;
-  chat(c, 9, c.q!.answer, shownAt - 2500, t); // gửi lúc cô còn đọc, tới sau khi bảng hiện
+  chat(c, 9, c.q!.answer, shownAt - 2500, t); // gửi lúc chú còn đọc, tới sau khi bảng hiện
   assert.equal(c.correct.length, 0, 'gửi trước khi bảng hiện: không tính dù tới trễ');
   t = shownAt + 3000;
   chat(c, 9, c.q!.answer, t - delay, t); // xem live thấy bảng rồi mới gõ
@@ -975,7 +975,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.ok(c.view(t).fastest.length === 0 || c.view(t).fastest[0].ms > 0);
 }
 
-// ---------- nút "Chào tạm biệt": cô chào cuối buổi (có tên bạn dẫn đầu), biểu ngữ tan lớp ----------
+// ---------- nút "Chào tạm biệt": chú chào cuối buổi (có tên bạn dẫn đầu), biểu ngữ tan lớp ----------
 {
   const c = new Classroom([mk('BẢNG ĐEN')], t);
   c.newRound(t);
@@ -988,7 +988,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   chat(c, 1, c.q!.answer, t, t);
   while ((c.phase as string) !== 'reveal') c.tick((t += 500));
   said = c.goodbye(t);
-  assert.ok(LINES.goodbyeTop.some((f) => f('Bạn 1') === said[0].text.slice(3)), 'có bạn dẫn đầu: cô nhắc tên');
+  assert.ok(LINES.goodbyeTop.some((f) => f('Bạn 1') === said[0].text.slice(3)), 'có bạn dẫn đầu: chú nhắc tên');
 }
 
 // ---------- đuổi hình bắt chữ: hiện sẵn chữ cái đầu mỗi chữ trong ô đáp án ----------
@@ -1000,7 +1000,7 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   assert.equal(c.slots().map((x) => x ?? '_').join(''), 'C_ C___ C___ L___');
 }
 
-// ---------- gõ sai: lên đứng cạnh cô 3 câu, tối đa 3 bạn, ai sai trước lên trước ----------
+// ---------- gõ sai: lên đứng cạnh chú 3 câu, tối đa 3 bạn, ai sai trước lên trước ----------
 {
   const c = new Classroom(Array.from({ length: 30 }, (_, i) => mk('BẢNG ĐEN' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[i % 26] + (i >= 26 ? 'X' : ''))), t);
   c.newRound(t);
@@ -1030,13 +1030,13 @@ const recessOf = (game: 'rps' | 'callup' | 'pick' | 'roll' | 'heart', seed = 0.1
   c.newRound(t);
   let asked: ReturnType<Classroom['tick']> = [];
   while (c.phase !== 'question') asked = c.tick((t += 500));
-  assert.ok(!c.boardShown, 'cô đang đọc đề: bảng chữ chưa hiện');
+  assert.ok(!c.boardShown, 'chú đang đọc đề: bảng chữ chưa hiện');
   const qLine = asked.find((l) => l.text.includes('Câu 1.'))!;
   assert.ok(qLine && qLine.main && qLine.showAfter, 'đọc đề là câu chính (dừng giờ), đọc xong mới hiện bảng');
   assert.ok(/Đây là .* gồm \d+ chữ cái\./.test(qLine.text), 'đọc "Đây là ... gồm N chữ cái." (chủ kênh duyệt 2026-11-05)');
   assert.ok(!asked.some((l) => l.go), 'không hô bắt đầu');
   chat(c, 77, c.q!.answer, t, t); // gõ trước khi bảng hiện: không tính, không mất lượt
-  assert.equal(c.correct.length, 0, 'đáp án gõ trước khi cô đọc xong đề không tính');
+  assert.equal(c.correct.length, 0, 'đáp án gõ trước khi chú đọc xong đề không tính');
   c.showBoard();
   chat(c, 77, c.q!.answer, t, (t += 10));
   assert.equal(c.correct.length, 1, 'bảng hiện rồi thì gõ lại được tính');

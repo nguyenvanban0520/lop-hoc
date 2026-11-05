@@ -1,5 +1,5 @@
 // =====================================================
-//  CẤU HÌNH LỚP HỌC CHỮ: số liệu. Câu cô đọc nằm ở loi-thoai.ts, câu hỏi ở cau-hoi/*.txt
+//  CẤU HÌNH LỚP HỌC CHỮ: số liệu. Câu chú đọc nằm ở loi-thoai.ts, câu hỏi ở cau-hoi/*.txt
 // =====================================================
 
 import { ENGLISH_ONLY } from './mode';
@@ -14,7 +14,7 @@ export const GAME = {
   // + 2 câu tiếng Anh ở câu 3, 12 + 2 câu đố mẹo ở câu 7, 13 + 2 câu lịch sử ở câu 9, 17 (chủ kênh chốt 2026-11-04).
   // Câu 20 là câu hỏi vàng nhân đôi điểm.
   // bản riêng (2026-11-04): thêm 5 câu đuổi hình bắt chữ (emoji) -> còn 5 câu chữ thường
-  // 2026-11-05: đố mẹo thành tiết mục giữa tiết, 2 câu liền ở câu 11, 12 (ngay sau điểm danh câu 10), cô dẫn hài trước câu 11;
+  // 2026-11-05: đố mẹo thành tiết mục giữa tiết, 2 câu liền ở câu 11, 12 (ngay sau điểm danh câu 10), chú dẫn hài trước câu 11;
   // vẫn là câu hỏi bình thường (tính điểm, phạt đứng), không phải giờ nghỉ.
   // Đuổi hình ở câu 2, 6, 9, 14, 18; tiếng Anh 3, 13; lịch sử 8, 17
   roundPlan: ENGLISH_ONLY ? Array.from({ length: 20 }, () => 'anh' as const) : [
@@ -23,10 +23,10 @@ export const GAME = {
     'meo', 'meo', 'anh', 'dh', 'math3',
     'hard', 'su', 'dh', 'math4', 'hard',
   ] as const,
-  introSec: 5, // cô giới thiệu đầu tiết (giảm từ 8, chế độ nhanh 2026-11-04)
+  introSec: 5, // chú giới thiệu đầu tiết (giảm từ 8, chế độ nhanh 2026-11-04)
   // ---------- Chế độ nhanh (chủ kênh duyệt 2026-11-04): khách vào chơi giờ nghỉ, cần câu nối câu ----------
-  // true: cô đọc ngắn ("Câu 3. Một món ăn. <gợi ý>"), không hô bắt đầu; đọc XONG là hiện bảng chữ, nhận đáp án, chạy giờ.
-  // false: như cũ (đọc đề xong, hô bắt đầu mới hiện chữ, đồng hồ dừng lúc cô đọc)
+  // true: chú đọc ngắn ("Câu 3. Một món ăn. <gợi ý>"), không hô bắt đầu; đọc XONG là hiện bảng chữ, nhận đáp án, chạy giờ.
+  // false: như cũ (đọc đề xong, hô bắt đầu mới hiện chữ, đồng hồ dừng lúc chú đọc)
   quickRead: true,
   closeAfterTopN: 5, // đủ chừng này bạn đúng (top có điểm cao) thì chốt câu sau closeAfterTopSec giây. 0 = tắt
   closeAfterTopSec: 3,
@@ -42,29 +42,29 @@ export const GAME = {
   // Lớp vắng: 5 phút không ai bình luận / tặng quà / thả tim thì tiết sau là "ôn bài" (hỏi lại câu cũ, để dành câu mới).
   // Có bạn vào lại thì từ câu kế tiếp đổi sang câu mới.
   emptyRoomMs: 5 * 60_000,
-  timeGreetEvery: 4, // ngoài lúc đổi buổi, cứ chừng này tiết cô chào theo giờ một lần
-  // Lấp khoảng im lặng lúc chờ trả lời câu chữ: cứ chừng này cô làm 1 việc, xoay vòng
-  // rủ "ai yêu cô gõ số 1" -> kể chuyện vui / mẹo tiếng Anh -> hỏi bình chọn (miền Bắc gõ B...) -> kể chuyện
-  engageEveryMs: 180_000, // giảm từ 100 giây (chủ kênh thấy cô nói quá nhiều, 2026-11-04)
+  timeGreetEvery: 4, // ngoài lúc đổi buổi, cứ chừng này tiết chú chào theo giờ một lần
+  // Lấp khoảng im lặng lúc chờ trả lời câu chữ: cứ chừng này chú làm 1 việc, xoay vòng
+  // rủ "ai yêu chú gõ số 1" -> kể chuyện vui / mẹo tiếng Anh -> hỏi bình chọn (miền Bắc gõ B...) -> kể chuyện
+  engageEveryMs: 180_000, // giảm từ 100 giây (chủ kênh thấy chú nói quá nhiều, 2026-11-04)
   engageOrder: ['love', 'story', 'poll', 'sleep'] as const, // 'sleep': gọi 1 bạn ngủ gật dậy (không ai ngủ thì kể chuyện)
   loveWindowMs: 15_000, // đếm ai gõ trong chừng này rồi cảm ơn / đọc kết quả
 
   // ---------- Học sinh tương tác trên màn hình ----------
-  walkMs: 6000, // tặng hoa: bạn nhỏ đi lên bục đưa hoa cho cô rồi về chỗ
+  walkMs: 6000, // tặng hoa: bạn nhỏ đi lên bục đưa hoa cho chú rồi về chỗ
   bubbleMs: 5000, // bong bóng chat trên đầu (không hiện câu trả lời, không hiện câu có từ cấm)
-  sleepAfterMs: 5 * 60_000, // ngồi im chừng này thì ngủ gật 💤, thỉnh thoảng cô gọi dậy
-  // gõ sai: lên đứng cạnh cô (học sinh cá biệt) chừng này câu rồi về chỗ; tối đa standMax bạn cùng lúc, ai sai trước lên trước
+  sleepAfterMs: 5 * 60_000, // ngồi im chừng này thì ngủ gật 💤, thỉnh thoảng chú gọi dậy
+  // gõ sai: lên đứng cạnh chú (học sinh cá biệt) chừng này câu rồi về chỗ; tối đa standMax bạn cùng lúc, ai sai trước lên trước
   standQuestions: 3,
-  standMax: 6, // 6 chỗ đứng trên sàn giữa cô và dãy bàn đầu
+  standMax: 6, // 6 chỗ đứng trên sàn giữa chú và dãy bàn đầu
   bonusSec: 10, // hết giờ chưa ai đúng: mở 1 chữ, thêm chừng này giây
-  praiseEvery: 10, // cứ chừng này câu cô dừng lại điểm danh top 3, tặng quà (chế độ nhanh: chỉ sau câu 10; trước là 5)
-  praiseSec: 3, // đọc xong còn dừng chừng này giây để các bạn nhỏ chào cô, thả tim rồi mới ra câu tiếp
-  giftChance: 0.4, // tỉ lệ cô thưởng quà cho bạn đúng đầu tiên / đạt mốc chuỗi câu liền
+  praiseEvery: 10, // cứ chừng này câu chú dừng lại điểm danh top 3, tặng quà (chế độ nhanh: chỉ sau câu 10; trước là 5)
+  praiseSec: 3, // đọc xong còn dừng chừng này giây để các bạn nhỏ chào chú, thả tim rồi mới ra câu tiếp
+  giftChance: 0.4, // tỉ lệ chú thưởng quà cho bạn đúng đầu tiên / đạt mốc chuỗi câu liền
   deskGifts: 4, // mỗi bàn bày tối đa chừng này món quà (mới nhất)
-  warnLeftSec: 5, // còn chừng này giây thì cô nhắc "chuẩn bị hết giờ" (đồng hồ không dừng)
+  warnLeftSec: 5, // còn chừng này giây thì chú nhắc "chuẩn bị hết giờ" (đồng hồ không dừng)
   revealSec: 5,
   resultsSec: 8,
-  superFastSec: 4, // đúng trong 4 giây đầu: cô nghi "quay cóp"
+  superFastSec: 4, // đúng trong 4 giây đầu: chú nghi "quay cóp"
 
   // ---------- Điểm ----------
   // top 5 nhanh nhất: 10, 7, 5, 3, 3; chậm hơn top 5 đều +1 (chủ kênh chốt 2026-11-04). Câu hỏi vàng x2
@@ -74,17 +74,17 @@ export const GAME = {
   // khen + thưởng khi đúng liền đủ 5, 12, 17 câu (chủ kênh chốt 2026-11-04, trước cứ 3 câu là khen, dễ quá)
   streakMilestones: [5, 12, 17],
   streakBonus: 5, // thưởng thêm
-  streakNamesRead: 3, // nhiều bạn cùng đủ chuỗi 1 lúc: cô gộp 1 câu, đọc tối đa chừng này tên (còn lại "và N bạn nữa")
+  streakNamesRead: 3, // nhiều bạn cùng đủ chuỗi 1 lúc: chú gộp 1 câu, đọc tối đa chừng này tên (còn lại "và N bạn nữa")
   requireDiacritics: true, // phải gõ đủ dấu mới tính đúng ("phan" không ăn "phấn"); dấu kiểu cũ/mới đều được
   keepHiddenLetters: 2, // gợi ý không bao giờ mở quá (số chữ - 2)
-  roastChance: 0.2, // tỉ lệ cô cà khịa 1 bạn trả lời sai lúc hiện đáp án (giảm từ 0.6, 2026-11-04)
-  monitorEveryQ: 4, // lớp trưởng đổi người: cách ít nhất chừng này câu cô mới báo lại
+  roastChance: 0.2, // tỉ lệ chú cà khịa 1 bạn trả lời sai lúc hiện đáp án (giảm từ 0.6, 2026-11-04)
+  monitorEveryQ: 4, // lớp trưởng đổi người: cách ít nhất chừng này câu chú mới báo lại
 
   // ---------- Giờ ra chơi (sau mỗi tiết) ----------
   recessPlaySec: { rps: 15, callup: 12, pick: 15, roll: 10, heart: 20 }, // chế độ nhanh: ra chơi + bình chọn ~35 giây
   recessResultSec: 5,
   recessBoardSec: 5, // bảng "học sinh giỏi hôm nay"
-  rpsPoints: 2, // oẳn tù tì thắng cô
+  rpsPoints: 2, // oẳn tù tì thắng chú
   callUpPoints: 5, // kiểm tra miệng trả lời đúng
   rollPoints: 3, // điểm danh nhanh
   rollWinners: 10,
@@ -98,19 +98,19 @@ export const GAME = {
   hotTopics: ['16-gen-z', '32-cong-so', '33-gen-z-trend', '34-an-uong-tinh-yeu'],
   hotShare: 0.5, // tỉ lệ câu chữ thường bốc từ hotTopics (giảm từ 0.75, 2026-11-05: trộn thêm chủ đề đời thường gần gũi); chủ đề cả lớp bình chọn vẫn ưu tiên trước
 
-  // ---------- Chia tổ (bản riêng cô Ngân) ----------
+  // ---------- Chia tổ (bản riêng chú PAN) ----------
   // Trước mỗi tiết có chừng này giây chọn tổ (gõ "tổ 1".."tổ 4", "t2", "3", "tổ ba"). Ai chưa chọn thì máy xếp vào tổ ít người nhất.
   // Bạn vào lớp giữa tiết cũng được xếp ngay. 0 = tắt phần chọn tổ (test cũ dùng).
   teamPickSec: 20,
   teamPickEvery: 4, // chỉ tiết 1, 5, 9... mới có pha chọn tổ (giữ tổ qua các tiết, bạn mới vào tự xếp)
   teamCount: 4,
-  teamRemindLeftSec: 15, // còn chừng này giây thì cô nhắc chọn tổ
+  teamRemindLeftSec: 15, // còn chừng này giây thì chú nhắc chọn tổ
 
-  // ---------- Trang phục cô Ngân (bản riêng 2026-11-04) ----------
-  // hết 20 câu (tổng kết tiết) thì cô thay 1 bộ khác, bốc ngẫu nhiên; ảnh ở public/assets/nv/co-ngan/<bộ>/
+  // ---------- Trang phục chú PAN (bản riêng 2026-11-04) ----------
+  // hết 20 câu (tổng kết tiết) thì chú thay 1 bộ khác, bốc ngẫu nhiên; ảnh ở public/assets/nv/co-ngan/<bộ>/
   outfits: ['trang', 'so-mi', 'ao-dai-xanh-ngoc'] as const,
 
-  // ---------- 2 game lớn (bản riêng 2026-11-04): Đường lên đỉnh Everest, Rung Chuông Đồng ----------
+  // ---------- 2 game lớn (bản riêng 2026-11-04): Đường lên đỉnh Fansipan, Rung Chuông Đồng ----------
   // cứ chừng này tiết thì thay giờ ra chơi bằng 1 game (xen kẽ 2 game), xong game thì bình chọn chủ đề như thường.
   // Gõ A/B/C/D; ai đúng trong giờ đều được điểm, không xét nhanh chậm. Câu ở src/game/cau-hoi-show/.
   showEvery: ENGLISH_ONLY ? 0 : 4, // Bản tiếng Anh chỉ hỏi từ vựng, không xen game trắc nghiệm tiếng Việt.
@@ -136,7 +136,7 @@ export const GAME = {
   },
 
   // ---------- Chuyên cần, sinh nhật ----------
-  attendMilestones: [3, 5, 7, 10, 14, 21, 30], // đi học liền đủ chừng này ngày thì cô khen to + tặng quà
+  attendMilestones: [3, 5, 7, 10, 14, 21, 30], // đi học liền đủ chừng này ngày thì chú khen to + tặng quà
   birthdayCooldownMs: 60_000, // 2 lần chúc sinh nhật cách nhau ít nhất 1 phút (chống spam)
   birthdayBannerSec: 10,
   goodbyeBannerSec: 25, // nút "Chào tạm biệt": biểu ngữ tan lớp hiện chừng này giây
@@ -162,16 +162,16 @@ export const GAME = {
   standing: 0,
   joinKeywords: ['vaolop'],
 
-  // ---------- Quà: chia bậc bó hoa + quỹ hoa của cô (bản riêng, chủ kênh chốt 2026-11-04) ----------
+  // ---------- Quà: chia bậc bó hoa + quỹ hoa của chú (bản riêng, chủ kênh chốt 2026-11-04) ----------
   // bậc theo số xu của món quà (kim cương x số lượng). Mỗi xu = 1 bông vào quỹ hoa.
-  // Bảng "🎁 Gửi tặng cô Ngân" (chủ kênh 2026-11-05): vài món quà TikTok hay gặp, viết kiểu gửi tặng, KHÔNG giục, KHÔNG hứa
+  // Bảng "🎁 Gửi tặng chú PAN" (chủ kênh 2026-11-05): vài món quà TikTok hay gặp, viết kiểu gửi tặng, KHÔNG giục, KHÔNG hứa
   // lợi thế (TikTok cấm khuyến khích tặng quà, nhất là với trẻ em). match = tên quà TikTok (không phân biệt hoa thường),
-  // say = tên món cô đọc ("... tặng cô chiếc bánh donut"), icon = món bạn nhỏ cầm lên bục và bày sau lưng cô,
-  // thanks = nhóm lời đáp riêng của món trong loi-thoai.ts (bắn tim: "Uii bắn trúng tim cô rồi...").
+  // say = tên món chú đọc ("... tặng chú chiếc bánh donut"), icon = món bạn nhỏ cầm lên bục và bày sau lưng chú,
+  // thanks = nhóm lời đáp riêng của món trong loi-thoai.ts (bắn tim: "Uii bắn trúng tim chú rồi...").
   giftMenu: [
-    { match: ['rose'], icon: '🌹', label: 'Hoa hồng', say: 'bông hồng', caption: 'Tặng cô hoa', thanks: 'thankRose' as const },
-    { match: ['finger heart'], icon: '🫰', label: 'Bắn tim', say: 'cái bắn tim', caption: 'Bắn tim cho cô', thanks: 'thankHeart' as const },
-    { match: ['doughnut', 'donut'], icon: '🍩', label: 'Bánh donut', say: 'chiếc bánh donut', caption: 'Mời cô ăn bánh', thanks: 'thankDonut' as const },
+    { match: ['rose'], icon: '🌹', label: 'Hoa hồng', say: 'bông hồng', caption: 'Tặng chú hoa', thanks: 'thankRose' as const },
+    { match: ['finger heart'], icon: '🫰', label: 'Bắn tim', say: 'cái bắn tim', caption: 'Bắn tim cho chú', thanks: 'thankHeart' as const },
+    { match: ['doughnut', 'donut'], icon: '🍩', label: 'Bánh donut', say: 'chiếc bánh donut', caption: 'Mời chú ăn bánh', thanks: 'thankDonut' as const },
   ],
   giftTiers: [
     { min: 1, name: 'một bông hoa', label: '🌹 1 bông hoa', icon: '🌹', size: 1 },
@@ -179,9 +179,9 @@ export const GAME = {
     { min: 99, name: 'một bó hoa thật to', label: '💐 Bó hoa lớn', icon: '💐', size: 2 },
     { min: 500, name: 'cả một xe hoa', label: '🌸 Xe hoa', icon: '🌸', size: 2.6 },
   ],
-  // mục tiêu quỹ hoa trong ngày (số bông), đạt mốc nào thì cô cảm ơn cả lớp + pháo hoa, rồi tới mốc kế
+  // mục tiêu quỹ hoa trong ngày (số bông), đạt mốc nào thì chú cảm ơn cả lớp + pháo hoa, rồi tới mốc kế
   flowerGoals: [50, 100, 200, 500, 1000, 2000, 5000, 10000],
-  giftPileMax: 18, // bàn quà sau lưng cô bày tối đa chừng này món (mới nhất)
+  giftPileMax: 18, // bàn quà sau lưng chú bày tối đa chừng này món (mới nhất)
 
   // ---------- Quà / tim ----------
   // 0 = quà KHÔNG cho lợi thế trong game (chủ kênh chốt 2026-11-04): TikTok cấm khuyến khích trẻ em tặng quà,
@@ -196,12 +196,12 @@ export const GAME = {
   greetEveryMs: 8000,
   namesPerGreeting: 3,
   shareReminderEveryMs: 6 * 60_000,
-  idleAfterSec: 75, // không ai comment chừng này giây thì cô nhắc
-  // Nhịp giọng: câu chính (đề, đáp án, tổng kết) đọc theo chương trình, đồng hồ dừng trong lúc cô đọc.
+  idleAfterSec: 75, // không ai comment chừng này giây thì chú nhắc
+  // Nhịp giọng: câu chính (đề, đáp án, tổng kết) đọc theo chương trình, đồng hồ dừng trong lúc chú đọc.
   // Câu nói thêm (chào, cảm ơn, cà khịa) chỉ nói lúc đang chờ học sinh trả lời và còn hơn 5 giây.
   chatterMinLeftMs: 5000,
   // trần câu nói thêm thường (chào, khen người đúng đầu, nhận ra bạn đi học lại, rủ tương tác...) mỗi câu hỏi / mỗi phần.
-  // Cảm ơn quà, sinh nhật, lên lớp không tính trần. Chủ kênh thấy cô nói quá nhiều (2026-11-04).
+  // Cảm ơn quà, sinh nhật, lên lớp không tính trần. Chủ kênh thấy chú nói quá nhiều (2026-11-04).
   chatterPerPhase: 1,
   chatterMaxWaitMs: 35_000, // câu chào chờ được qua 1 vòng câu hỏi, quá thì bỏ
   giftLineMaxWaitMs: 45_000, // cảm ơn quà chờ lâu hơn

@@ -1,4 +1,4 @@
-# Mật mã trạm (game Đường lên đỉnh Everest): người xem gõ thẳng từ khoá, có dấu.
+# Mật mã trạm (game Đường lên đỉnh Fansipan): người xem gõ thẳng từ khoá, có dấu.
 # Mỗi dòng: MẬT MÃ | gợi ý 1 (khó nhất, 30 điểm) | gợi ý 2 (20 điểm) | gợi ý 3 (dễ nhất, 10 điểm)
 # Gợi ý không được chứa nguyên mật mã. Kiểm tra: npx tsx src/game/bank.check.ts
 TRÀ SỮA | Gen Z gọi đây là "nước thánh", uống xong mới làm việc nổi. | Gọi thêm trân châu, thạch, kem cheese là đủ bộ. | Ly đồ uống pha trà với sữa, cắm ống hút to.

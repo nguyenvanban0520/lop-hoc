@@ -60,7 +60,7 @@ export function useGame() {
   }));
 
   // Nhịp giọng bám chương trình:
-  // - Câu chính (đề, đáp án, tổng kết, ra chơi) đọc ngay; trong lúc cô đọc, đồng hồ phần đó dừng lại.
+  // - Câu chính (đề, đáp án, tổng kết, ra chơi) đọc ngay; trong lúc chú đọc, đồng hồ phần đó dừng lại.
   // - Câu nói thêm (chào, cảm ơn, cà khịa) giữ ở đây, chỉ nói khi đang chờ học sinh trả lời và còn hơn 5 giây.
   const mainSpeaking = useRef(0);
   const chatter = useRef<{ text: string; priority: boolean; until: number }[]>([]);
@@ -69,7 +69,7 @@ export function useGame() {
     for (const l of lines) {
       if (l.main) {
         mainSpeaking.current++;
-        // câu hô bắt đầu: cô vừa mở miệng hô thì hiện bảng chữ
+        // câu hô bắt đầu: chú vừa mở miệng hô thì hiện bảng chữ
         const onStart = l.go
           ? () => {
               roomRef.current?.showBoard();
@@ -144,7 +144,7 @@ export function useGame() {
       const coins = e.diamondCount * e.repeatCount;
       setLastGift({ ...e, nickname: p.nickname, at: Date.now() });
       const hint = room.gift(p, coins, Date.now(), e.repeatCount, e.giftName);
-      say(hint); // bạn nhỏ lên bục đưa hoa: cô cảm ơn ngay, quà đạt mốc quỹ hoa: cô cảm ơn cả lớp
+      say(hint); // bạn nhỏ lên bục đưa hoa: chú cảm ơn ngay, quà đạt mốc quỹ hoa: chú cảm ơn cả lớp
       // combo / tặng liên tục chỉ cảm ơn 1 lần mỗi 30 giây; quà to luôn cảm ơn
       if (!hint.length && talk.gifts.shouldThank(e.username, coins, chatter.current.filter((c) => c.priority).length)) say([room.thank(p, e.giftName, coins)]);
     },
@@ -176,11 +176,11 @@ export function useGame() {
         say(room.newRound(Date.now()));
       }
       if (c.action === 'custom' && c.text === 'skip') say(room.skip(Date.now()));
-      if (c.action === 'custom' && (c.text === 'vocabulary' || c.text === 'classroom')) {
+      if (c.action === 'custom' && (c.text === 'vocabulary' || c.text === 'classroom' || c.text === 'hack')) {
         voice.stop();
         mainSpeaking.current = 0;
         chatter.current = [];
-        say(c.text === 'vocabulary' ? room.forceVocabulary(Date.now()) : room.forceClassroom(Date.now()));
+        say(c.text === 'hack' ? room.forceHack(Date.now()) : c.text === 'vocabulary' ? room.forceVocabulary(Date.now()) : room.forceClassroom(Date.now()));
         dirty.current = true;
       }
       if (c.action === 'custom' && c.text === 'ban') say(room.banCurrent(Date.now()));
@@ -270,7 +270,7 @@ export function useGame() {
       timers.push(
         setInterval(() => {
           const now = Date.now();
-          // cô đang đọc câu chính: dừng đồng hồ (vd đọc đề xong mới đếm 20 giây)
+          // chú đang đọc câu chính: dừng đồng hồ (vd đọc đề xong mới đếm 20 giây)
           if (mainSpeaking.current > 0) {
             room.hold(now - lastTick);
             dirty.current = true;
@@ -280,7 +280,7 @@ export function useGame() {
           flushChatter(room, now);
           // game lớn: tích tắc 5 giây cuối như câu hỏi tiết học
           sfx.clock(room.showAsking() ? 'question' : room.phase, room.boardShown, room.phaseEndsAt, now);
-          // nhạc nền EDM game lớn: cô đang đọc thì nhạc lùi xa cho rõ giọng; chờ trả lời thì sập sình, 5 giây cuối dồn dập
+          // nhạc nền EDM game lớn: chú đang đọc thì nhạc lùi xa cho rõ giọng; chờ trả lời thì sập sình, 5 giây cuối dồn dập
           const sh = room.show;
           const step = sh?.steps[sh.i]?.k;
           const busy = mainSpeaking.current > 0;

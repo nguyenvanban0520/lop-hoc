@@ -1,4 +1,4 @@
-# Câu trắc nghiệm cho 2 game lớn: Đường lên đỉnh Everest, Rung Chuông Đồng (bản riêng cô Ngân)
+# Câu trắc nghiệm cho 2 game lớn: Đường lên đỉnh Fansipan, Rung Chuông Đồng (bản riêng cô Ngân)
 # Mỗi dòng: câu hỏi | đáp án ĐÚNG | sai | sai | sai   (game tự xáo vị trí A B C D, nên cứ ghi đáp án đúng đầu tiên)
 # Nhóm: [de] làm nóng · [vua] phổ thông · [kho] thử thách / chạm đỉnh · [chuong] câu Chuông Đồng · [phu] câu phụ phân định
 # Chủ kênh chốt 2026-11-04: khó hơn tiết học rõ rệt, kể cả câu làm nóng. Đáp án sai phải "na ná" đáp án đúng.

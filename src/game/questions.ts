@@ -1,5 +1,5 @@
 // Bộ câu hỏi nằm ở src/game/cau-hoi/*.txt (mỗi file 1 chủ đề, dòng đầu "# Tên chủ đề",
-// dòng "> Đây là một món ăn." là câu cô nói trước gợi ý, áp cho mọi câu bên dưới tới dòng ">" kế tiếp).
+// dòng "> Đây là một món ăn." là câu chú nói trước gợi ý, áp cho mọi câu bên dưới tới dòng ">" kế tiếp).
 // Mỗi dòng: ĐÁP ÁN | gợi ý | độ khó 1-3 | cách viết khác (cách nhau dấu phẩy)
 // Kiểm tra cả bộ: npx tsx src/game/quiz.check.ts
 
@@ -8,10 +8,11 @@ export interface Question {
   clue: string;
   answer: string;
   acceptedAnswers?: string[];
+  fixedTiles?: string[];
   category: string;
-  kind: string; // câu cô nói trước gợi ý, vd "Đây là một món ăn." (dòng "> ..." đầu file)
+  kind: string; // câu chú nói trước gợi ý, vd "Đây là một món ăn." (dòng "> ..." đầu file)
   difficulty: 'easy' | 'medium' | 'hard';
-  /** câu toán nhẩm (math.ts): phép tính hiện trên bảng và cách cô đọc, không có trong file câu hỏi */
+  /** câu toán nhẩm (math.ts): phép tính hiện trên bảng và cách chú đọc, không có trong file câu hỏi */
   math?: { show: string; say: string };
   /** câu có chỗ riêng trong tiết, theo đuôi tên file: "-meo" câu đố mẹo, "-su" câu lịch sử.
    *  Chỉ hỏi ở đúng vị trí đó trong GAME.roundPlan, không lẫn vào câu chữ thường */
@@ -20,7 +21,7 @@ export interface Question {
 
 const LEVEL = { '1': 'easy', '2': 'medium', '3': 'hard' } as const;
 
-export const SLOTS = ['meo', 'su', 'anh', 'dh'] as const;
+export const SLOTS = ['meo', 'su', 'anh', 'dh', 'hack'] as const;
 export type Slot = (typeof SLOTS)[number];
 
 /** Đọc các file câu hỏi. `errors` gom dòng sai cú pháp để script kiểm tra báo ra */
@@ -41,10 +42,15 @@ export function parseBank(files: Record<string, string>, errors: string[] = []):
         kind = line.slice(1).trim();
         return;
       }
-      const [answer, clue, level, alts] = line.split('|').map((s) => s.trim());
+      const [answer, clue, level, alts, tiles] = line.split('|').map((s) => s.trim());
       const difficulty = LEVEL[level as keyof typeof LEVEL];
       if (!answer || !clue || !difficulty) {
         errors.push(`${file}:${i + 1} sai cú pháp: ${line}`);
+        return;
+      }
+      const fixedTiles = tiles ? [...tiles.normalize('NFC').toUpperCase().replace(/\s+/g, '')] : undefined;
+      if (fixedTiles && [...fixedTiles].sort().join('') !== [...answer.normalize('NFC').toUpperCase().replace(/\s+/g, '')].sort().join('')) {
+        errors.push(`${file}:${i + 1} chữ xáo trộn không khớp đáp án`);
         return;
       }
       out.push({
@@ -54,7 +60,8 @@ export function parseBank(files: Record<string, string>, errors: string[] = []):
         category,
         kind,
         difficulty,
-        slot: SLOTS.find((s) => file.endsWith(`-${s}`)),
+        slot: file === 'hack-nao' ? 'hack' : SLOTS.find((s) => file.endsWith(`-${s}`)),
+        fixedTiles,
         acceptedAnswers: alts ? alts.split(',').map((s) => s.trim()).filter(Boolean) : undefined,
       });
     });

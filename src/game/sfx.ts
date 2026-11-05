@@ -5,32 +5,32 @@ import type { StageView } from './useGame';
  * Muốn tiếng đẹp hơn: bỏ file mp3 cùng tên vào public/assets/sfx/ (vd ting.mp3), game tự dùng file thay cho tiếng tự tạo.
  *   ting    có bạn trả lời đúng
  *   drum    trống vào tiết
- *   go      cô hô bắt đầu, hiện bảng chữ
+ *   go      chú hô bắt đầu, hiện bảng chữ
  *   tick    tích tắc 5 giây cuối
  *   bell    hết giờ, hiện đáp án
  *   pop     quà bay xuống bàn
  *   clap    cả lớp vỗ tay
  *   fanfare phát quà giữa tiết, sinh nhật
  *   whoosh  2 game lớn: vút lên lúc sang phần chơi mới
- *   boom    2 game lớn: cô hô bắt đầu, nhạc "drop"
+ *   boom    2 game lớn: chú hô bắt đầu, nhạc "drop"
  *   chime   Rung Chuông Đồng: chuông leng keng
  *   gong    Rung Chuông Đồng: chuông đồng ngân lúc hiện đáp án
- * Nhạc nền EDM của 2 game lớn cũng tự tạo (music()), nhỏ hơn giọng cô.
+ * Nhạc nền EDM của 2 game lớn cũng tự tạo (music()), nhỏ hơn giọng chú.
  */
 export type SfxName = 'ting' | 'drum' | 'go' | 'tick' | 'bell' | 'pop' | 'clap' | 'fanfare' | 'whoosh' | 'boom' | 'chime' | 'gong';
 const NAMES: SfxName[] = ['ting', 'drum', 'go', 'tick', 'bell', 'pop', 'clap', 'fanfare', 'whoosh', 'boom', 'chime', 'gong'];
 
-/** Nhạc nền 2 game lớn: Everest 128 BPM La thứ, Rung Chuông Đồng 140 BPM Rê thứ. Mỗi ô là 1 nốt móc kép (1/16) */
+/** Nhạc nền 2 game lớn: Fansipan 128 BPM La thứ, Rung Chuông Đồng 140 BPM Rê thứ. Mỗi ô là 1 nốt móc kép (1/16) */
 const TRACKS = {
   everest: { bpm: 128, chords: [[220, 261.6, 329.6], [174.6, 220, 261.6], [261.6, 329.6, 392], [196, 246.9, 293.7]] },
   chuong: { bpm: 140, chords: [[293.7, 349.2, 440], [233.1, 293.7, 349.2], [174.6, 220, 261.6], [261.6, 329.6, 392]] },
 } as const;
 
 class Sfx {
-  volume = 0.35; // nhỏ hơn giọng cô để không lấn tiếng
+  volume = 0.35; // nhỏ hơn giọng chú để không lấn tiếng
   // ---------- nhạc nền EDM ----------
   private track: keyof typeof TRACKS | null = null;
-  /** 0: cô đang nói (nhạc lùi xa, chỉ kick + pad) · 1: đang chờ trả lời (sập sình đủ bộ) · 2: 5 giây cuối (dồn dập + trống dồn) */
+  /** 0: chú đang nói (nhạc lùi xa, chỉ kick + pad) · 1: đang chờ trả lời (sập sình đủ bộ) · 2: 5 giây cuối (dồn dập + trống dồn) */
   private level = 0;
   private musicOut: GainNode | null = null;
   private musicTimer: ReturnType<typeof setInterval> | null = null;
@@ -170,7 +170,7 @@ class Sfx {
 
 /** 1 ô nhịp (1/16) của nhạc nền EDM: kick 4 phách, clap phách 2 và 4, hi-hat, bass nảy, arp synth, pad hợp âm */
 function beat(c: AudioContext, out: GainNode, chord: readonly number[], pos: number, t: number, len: number, level: number) {
-  // kick: cô đang nói thì chỉ đánh nửa nhịp cho đỡ lấn giọng
+  // kick: chú đang nói thì chỉ đánh nửa nhịp cho đỡ lấn giọng
   if (level === 0 ? pos % 8 === 0 : pos % 4 === 0) toneAt(c, out, 'sine', 150, t, 0.28, 1, 42);
   if (level === 0) {
     if (pos === 0) chord.forEach((f) => toneAt(c, out, 'triangle', f, t, len * 15, 0.07));

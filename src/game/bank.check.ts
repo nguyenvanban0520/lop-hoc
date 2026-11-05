@@ -54,7 +54,7 @@ if (dup.length) console.log(`Cùng đáp án ở 2 chủ đề (gợi ý khác n
     if (n < 3 || n > 14) errors.push(`${c.id}: mật mã ${n} chữ (cho phép 3-14)`);
     for (const h of c.hints) if (` ${normVi(h).replace(/[^\p{L}\p{N}]+/gu, ' ')} `.includes(` ${normVi(c.answer)} `)) errors.push(`${c.id}: gợi ý lộ mật mã: ${h}`);
   }
-  // mỗi game cần: Everest de 4, vua 4, kho 3, phu 1; Rung Chuông de 4, vua 7, kho 3, chuong 1, phu 1
+  // mỗi game cần: Fansipan de 4, vua 4, kho 3, phu 1; Rung Chuông de 4, vua 7, kho 3, chuong 1, phu 1
   const by = (l: string) => mc.filter((q) => q.level === l).length;
   console.log(`game lớn: ${mc.length} câu trắc nghiệm (de ${by('de')} · vua ${by('vua')} · kho ${by('kho')} · chuong ${by('chuong')} · phu ${by('phu')}), ${codes.length} mật mã`);
 }

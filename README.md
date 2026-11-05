@@ -19,7 +19,7 @@ Game tương tác cho TikTok LIVE. Màn hình là một lớp học 2D có cô g
 **Lớp học sống động**
 - Bình luận là có ghế (30 ghế trên 4 dãy bàn), chia 4 tổ thi đua, lớp trưởng mỗi tiết, bảng "Học sinh xuất sắc trong tiết", bảng "Top tương tác" (làm lại mỗi buổi live).
 - Học bạ cả đời: điểm cộng dồn để lên lớp 1 tới lớp 12 rồi tốt nghiệp, huy hiệu theo số câu đúng. Đi học nhiều ngày liền thì cô nhớ mặt. Gõ "sinh nhật" thì có bánh kem.
-- Giờ ra chơi (oẳn tù tì, kiểm tra miệng, chọn phe, điểm danh, thả tim) và 2 game lớn **Đường lên đỉnh Everest**, **Rung Chuông Đồng** (trắc nghiệm A/B/C/D, nhạc nền tự tạo).
+- Giờ ra chơi (oẳn tù tì, kiểm tra miệng, chọn phe, điểm danh, thả tim) và 2 game lớn **Đường lên đỉnh Fansipan**, **Rung Chuông Đồng** (trắc nghiệm A/B/C/D, nhạc nền tự tạo).
 - Cô Ngân có 3 bộ trang phục, đổi sau mỗi tiết, nhiều tư thế theo tình huống. Giọng nữ Edge TTS tiếng Việt, vài trăm câu thoại: khen "thần đồng" khi trả lời siêu nhanh, trêu nhẹ khi sai, chào theo giờ.
 
 **Quà chỉ để cảm ơn**
@@ -97,6 +97,15 @@ Kiểm tra chế độ tiếng Anh: `npx tsx src/game/english.check.ts`.
 - Các nút giả lập để thử khi chưa live.
 
 ## Thêm hoặc sửa câu hỏi
+
+Game **Hack Não** có nút chọn riêng trong trang điều khiển, đọc `src/game/cau-hoi/hack-nao.txt`.
+Cấu trúc như file đố mẹo; có thêm cột thứ năm không bắt buộc để cố định thứ tự chữ:
+
+```text
+MỨT CÓC | Một món ăn | 2 | | M Ó C C Ứ T
+```
+
+Bỏ trống cột cuối để xáo ngẫu nhiên. Game dùng tối đa 20 câu theo thứ tự trong file cho một lượt; file có ít câu thì lượt chơi ngắn tương ứng. Bộ Hack Não không lẫn vào câu hỏi lớp học thường.
 
 Mỗi file trong `src/game/cau-hoi/` là một chủ đề:
 
