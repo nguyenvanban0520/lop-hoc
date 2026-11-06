@@ -1,9 +1,9 @@
 # Gen Z, mạng xã hội
 > Đây là từ của giới trẻ, dân mạng.
-TIKTOK | Ứng dụng các bạn đang mở để xem cô dạy, lướt một cái là mất hai tiếng. | 1
+TIKTOK | Ứng dụng các bạn đang mở để xem giáo viên dạy, lướt một cái là mất hai tiếng. | 1
 ZALO | Ứng dụng nhắn tin bố mẹ dùng để gửi ảnh hoa sen chúc buổi sáng. | 1
-THẢ TIM | Chạm liên tục vào màn hình để cô vui, miễn phí mà ít ai làm. | 1
-THEO DÕI | Bấm một cái để mai không bỏ lỡ tiết của cô. | 1 | FOLLOW
+THẢ TIM | Chạm liên tục vào màn hình để giáo viên vui, miễn phí mà ít ai làm. | 1
+THEO DÕI | Bấm một cái để mai không bỏ lỡ tiết của giáo viên. | 1 | FOLLOW
 CHIA SẺ | Gửi video cho đứa bạn kèm câu "y chang mày". | 1 | SHARE
 XU HƯỚNG | Thứ ai cũng làm theo trên mạng, hôm nay hot mai đã cũ. | 2 | TREND
 SỐNG ẢO | Ảnh trên mạng ở Đà Lạt mộng mơ, ngoài đời đang nằm ăn mì gói. | 2
@@ -24,7 +24,7 @@ GÀ | Chơi dở, mới tập, bị cả đội chửi. | 1 | NOOB
 CAO THỦ | Chơi tới đâu thắng tới đó, đồng đội nhìn mà nể. | 1 | PRO
 SẠC DỰ PHÒNG | Cục pin mang theo cứu điện thoại, quên ở nhà là cả ngày lo âu. | 3 | PIN DỰ PHÒNG
 ẢNH ĐẠI DIỆN | Hình nhỏ cạnh tên tài khoản, chọn mất một tuần mới đổi. | 2 | AVATAR
-BÌNH LUẬN | Việc các bạn đang làm để trả lời cô, gõ vào ô dưới màn hình. | 1 | COMMENT
+BÌNH LUẬN | Việc các bạn đang làm để trả lời giáo viên, gõ vào ô dưới màn hình. | 1 | COMMENT
 NHẮN TIN | Soạn xong xoá, xoá xong soạn, cuối cùng gửi một chữ "ừ". | 1 | CHAT
 GỌI VIDEO | Gọi điện thấy mặt nhau, mẹ hay gọi lúc mình vừa ngủ dậy. | 2 | VIDEO CALL
 BẠN GÁI | Người có thể hỏi "em béo không" và chỉ có một đáp án đúng. | 1
@@ -37,7 +37,7 @@ GIỎ HÀNG | Nơi chứa toàn đồ định mua, chờ lương về rồi... v
 CHỤP ẢNH THẺ | Vào buồng nhỏ tạo dáng bốn kiểu, in ra một dải bốn tấm dọc. | 3 | PHOTOBOOTH
 CUNG HOÀNG ĐẠO | Bạch Dương, Kim Ngưu, Song Tử... đổ lỗi cho sao trời khi mình nóng tính. | 2
 FAN CỨNG | Người theo dõi lâu năm, ngày nào live cũng có mặt, giống mấy bạn trong lớp mình. | 2
-PHÁT TRỰC TIẾP | Việc cô Ngân đang làm ngay lúc này, cả nước xem cùng một lúc. | 2
+PHÁT TRỰC TIẾP | Việc giáo viên PAN đang làm ngay lúc này, cả nước xem cùng một lúc. | 2
 LƯỚT MẠNG | Ngón cái kéo màn hình mãi không dừng, tỉnh lại thì đã hai giờ sáng. | 1
 LƯỢT THÍCH | Con số dưới bài đăng, đăng xong cứ năm phút mở ra đếm một lần. | 2
 ẢNH CHẾ | Ảnh cắt ghép thêm chữ cho hài, gửi vào nhóm là cả nhóm cười lăn. | 1

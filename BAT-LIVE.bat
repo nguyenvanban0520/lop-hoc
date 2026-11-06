@@ -10,7 +10,7 @@ echo Link cho TikTok LIVE Studio: http://lvh.me:3006/?view=stage  (1080 x 1920)
 echo Bao cao sau buoi live: http://localhost:3006/bao-cao
 rem Che do live: trang stage khong tu tai lai khi sua code
 set LIVE_MODE=1
-rem Cong rieng cua Lop Hoc Chu (game khac dung 3000)
+rem Cong rieng cua Hoc cung chu PAN (game khac dung 3000)
 set PORT=3006
 start "" cmd /c "timeout /t 8 >nul & start http://localhost:3006"
 rem Treo live ca ngay: server bi tat (loi, het bo nho...) thi tu bat lai sau 5 giay.

@@ -2,7 +2,7 @@
 # Câu lịch sử: chỉ hỏi ở vị trí 'su' trong GAME.roundPlan, không lẫn vào câu chữ thường.
 # Phạm vi: lịch sử Việt Nam tới năm 1945, kiến thức sách giáo khoa, tránh chuyện còn tranh cãi.
 # Chi tiết nào các nguồn ghi khác nhau thì KHÔNG đưa vào gợi ý (vd năm sinh, lý do tên gọi).
-# Viết lại 2026-11-05 (chủ kênh duyệt): chia nhóm theo danh xưng, cô đọc "Đây là tên một vị vua gồm 11 chữ cái." rồi hỏi thẳng
+# Viết lại 2026-11-05 (chủ kênh duyệt): chia nhóm theo danh xưng, giáo viên đọc "Đây là tên một vị vua gồm 11 chữ cái." rồi hỏi thẳng
 # "Ai là...", "Vị vua nào...", "Con sông nào...". Dòng ">" là danh xưng của nhóm bên dưới.
 # Mỗi dòng: ĐÁP ÁN | câu hỏi | độ khó (1 dễ, 2 vừa, 3 khó) | cách trả lời khác cũng tính đúng
 > Đây là tên một vị vua.

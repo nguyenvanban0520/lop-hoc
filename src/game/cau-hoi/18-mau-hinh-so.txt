@@ -1,6 +1,6 @@
 # Màu sắc, hình học, con số
 > Đây là một màu sắc.
-MÀU ĐỎ | Màu quả ớt chín, lá cờ, phong bì lì xì Tết, và chữ cô phê "làm lại". | 1 | ĐỎ
+MÀU ĐỎ | Màu quả ớt chín, lá cờ, phong bì lì xì Tết, và chữ giáo viên phê "làm lại". | 1 | ĐỎ
 MÀU XANH | Màu lá cây, bầu trời, cũng là màu đèn được đi. | 1 | XANH
 MÀU VÀNG | Màu chuối chín, ngôi sao trên cờ, và cái thẻ trọng tài rút ra nhắc nhở. | 1 | VÀNG
 MÀU TÍM | Màu hoa sim, mực học trò ngày xưa, người "thuỷ chung" hay mặc. | 1 | TÍM
@@ -33,11 +33,11 @@ CHU VI | Tổng độ dài các cạnh, đi bộ quanh hồ một vòng là đo 
 DIỆN TÍCH | Tính bằng mét vuông, căn hộ thành phố thì nhỏ xíu mà giá trên trời. | 2
 > Đây là con số hoặc phép tính.
 SỐ KHÔNG | Số trước số một, cũng là số dư tài khoản ngày hai mươi lăm. | 1 | KHÔNG
-SỐ MỘT | Số đứng đầu, hạng nhất, ai yêu cô thì gõ nó. | 1 | MỘT
+SỐ MỘT | Số đứng đầu, hạng nhất, ai yêu giáo viên thì gõ nó. | 1 | MỘT
 MƯỜI | Số ngón tay của hai bàn tay, điểm tuyệt đối. | 1 | SỐ MƯỜI
 MỘT TRĂM | Mười lần mười, tờ tiền polime màu xanh lá. | 2 | TRĂM
 MỘT NGHÌN | Mười lần một trăm, tờ tiền nhỏ ngày xưa mua được cây kem. | 2 | NGHÌN, MỘT NGÀN
-MỘT TRIỆU | Một nghìn lần một nghìn, số lần chép phạt cao nhất của cô Ngân. | 2 | TRIỆU
+MỘT TRIỆU | Một nghìn lần một nghìn, số lần chép phạt cao nhất của giáo viên PAN. | 2 | TRIỆU
 MỘT TỶ | Ước mơ của nhiều người khi mua vé số, ở thành phố chưa mua nổi căn hộ. | 2 | TỶ, TỈ
 PHÉP CỘNG | Một với một thành hai, cũng là thứ cân nặng làm sau Tết. | 2
 PHÉP TRỪ | Lấy đi bớt, như lương bị trừ khi đi làm muộn. | 2

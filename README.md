@@ -1,29 +1,29 @@
-# Lớp Học Chữ
+# Học cùng chú PAN
 
-Game tương tác cho TikTok LIVE. Màn hình là một lớp học 2D có cô giáo **cô Ngân**: cô đọc đề, chữ cái xáo trộn hiện trên bảng đen, người xem gõ đáp án vào bình luận. Ai đúng nhanh nhất được nhiều điểm nhất và được ngồi bàn đầu.
+Game tương tác cho TikTok LIVE. Màn hình là một lớp học 2D có thầy giáo **chú PAN**: chú đọc đề, chữ cái xáo trộn hiện trên bảng đen, người xem gõ đáp án vào bình luận. Ai đúng nhanh nhất được nhiều điểm nhất và được ngồi bàn đầu.
 
 ## Tính năng
 
 **Tiết học 20 câu, nhịp nhanh**
 - 2.500 câu hỏi tiếng Việt, 34 chủ đề, mỗi câu là một dòng trong file text (`src/game/cau-hoi/`). Có bộ câu cho Gen Z và người đi làm, câu đời thường, ca dao thành ngữ.
 - Mỗi tiết có: câu chữ xáo, 5 câu **đuổi hình bắt chữ** (hình emoji, hiện sẵn chữ cái đầu), 4 câu **toán nhẩm** tự sinh, 2 câu **tiếng Anh**, 2 câu **lịch sử Việt Nam**, phần **đố mẹo** 2 câu liền giữa tiết. Câu 20 là **câu hỏi vàng** nhân đôi điểm.
-- Cô đọc: "Câu 3. Đây là một từ gồm 7 chữ cái. <gợi ý>". **Đọc xong đề mới hiện bảng chữ và mới nhận đáp án**; lúc cô đọc bảng chỉ hiện "Câu 3". Ai gửi đáp án trong lúc cô còn đọc thì không tính (xét theo giờ gửi, kể cả bình luận tới trễ), nhưng không mất lượt.
+- Chú đọc: "Câu 3. Đây là một từ gồm 7 chữ cái. <gợi ý>". **Đọc xong đề mới hiện bảng chữ và mới nhận đáp án**; lúc chú đọc bảng chỉ hiện "Câu 3". Ai gửi đáp án trong lúc chú còn đọc thì không tính (xét theo giờ gửi, kể cả bình luận tới trễ), nhưng không mất lượt.
 - Đủ 5 bạn đúng là 3 giây sau chốt câu, khỏi chờ hết giờ.
 
 **Chấm điểm công bằng**
 - Xếp ai nhanh nhất theo giờ TikTok ghi lúc người xem bấm gửi, không theo lúc máy nhận. Bảng **Top 5 nhanh nhất** ghi thời gian tới mili giây.
 - Top 5 được 10 / 7 / 5 / 3 / 3 điểm, chậm hơn +1 (chép đáp án trên khung chat chỉ được 1 điểm). Đúng liền 5, 12, 17 câu được thưởng thêm.
 - Phải gõ có dấu; kiểu bỏ dấu cũ và mới ("hóa" / "hoá") đều đúng. Nói chuyện thường không bị tính là trả lời sai.
-- Gõ sai thì lên đứng phạt giơ tay cạnh cô 3 câu.
+- Gõ sai thì lên đứng phạt giơ tay cạnh chú 3 câu.
 
 **Lớp học sống động**
 - Bình luận là có ghế (30 ghế trên 4 dãy bàn), chia 4 tổ thi đua, lớp trưởng mỗi tiết, bảng "Học sinh xuất sắc trong tiết", bảng "Top tương tác" (làm lại mỗi buổi live).
-- Học bạ cả đời: điểm cộng dồn để lên lớp 1 tới lớp 12 rồi tốt nghiệp, huy hiệu theo số câu đúng. Đi học nhiều ngày liền thì cô nhớ mặt. Gõ "sinh nhật" thì có bánh kem.
+- Học bạ cả đời: điểm cộng dồn để lên lớp 1 tới lớp 12 rồi tốt nghiệp, huy hiệu theo số câu đúng. Đi học nhiều ngày liền thì chú nhớ mặt. Gõ "sinh nhật" thì có bánh kem.
 - Giờ ra chơi (oẳn tù tì, kiểm tra miệng, chọn phe, điểm danh, thả tim) và 2 game lớn **Đường lên đỉnh Fansipan**, **Rung Chuông Đồng** (trắc nghiệm A/B/C/D, nhạc nền tự tạo).
-- Cô Ngân có 3 bộ trang phục, đổi sau mỗi tiết, nhiều tư thế theo tình huống. Giọng nữ Edge TTS tiếng Việt, vài trăm câu thoại: khen "thần đồng" khi trả lời siêu nhanh, trêu nhẹ khi sai, chào theo giờ.
+- Chú PAN dùng khuôn mặt thật của chủ kênh trên thân chibi nam mặc sơ mi xanh nhạt, quần tây; có 4 tư thế: đứng, chỉ bảng, vẫy chào và giơ ngón cái. Lời thoại xưng “chú”, gọi người chơi là “bạn”, “các bạn”, “cả lớp”. Giọng đọc dùng Edge TTS tiếng Việt; giọng mặc định hiện vẫn là HoaiMyNeural, có thể đổi bằng `TTS_VOICE`.
 
 **Quà chỉ để cảm ơn**
-- Bảng "🎁 Gửi tặng cô" (hoa hồng, bắn tim, bánh donut): ai tặng thì lên bục đưa cô, cô đáp lời riêng cho từng món, quà vào "Quỹ lớp". Quà **không** cho lợi thế gì trong game (TikTok không cho khuyến khích tặng quà, nhất là với trẻ em).
+- Bảng "🎁 Gửi tặng chú" (hoa hồng, bắn tim, bánh donut): ai tặng thì lên bục đưa chú, chú đáp lời riêng cho từng món, quà vào "Quỹ lớp". Quà **không** cho lợi thế gì trong game (TikTok không cho khuyến khích tặng quà, nhất là với trẻ em).
 
 **Treo live cả ngày**
 - Rớt kết nối TikTok thì tự nối lại, server tắt thì file BAT tự bật lại. Chịu được phòng đông (đo 13.000 người, vẽ màn hình dưới 1 ms).
@@ -42,7 +42,7 @@ Vào https://nodejs.org/, tải bản **LTS** (nút màu xanh), mở file vừa 
 
 **Bước 2: Tải game về máy**
 Ở đầu trang GitHub này bấm nút xanh **Code → Download ZIP**. Giải nén ra một thư mục, ví dụ `D:\lop-hoc-chu`.
-(Ai quen dùng git thì gõ `git clone https://github.com/workaipvlinh-byte/lop-hoc-chu.git`.)
+(Ai quen dùng git thì gõ `git clone https://github.com/nguyenvanban0520/lop-hoc.git`.)
 
 **Bước 3: Chạy game**
 Mở thư mục vừa giải nén, bấm đúp vào file **`BAT-LIVE.bat`**. Lần đầu máy tự cài thư viện, chờ 1–2 phút.
@@ -66,15 +66,15 @@ Mở TikTok LIVE Studio, bấm **Phát trực tiếp** (Go LIVE).
 **Bước 4: Đưa màn hình lớp học vào LIVE Studio** (làm 1 lần, lần sau giữ nguyên)
 Trong LIVE Studio thêm nguồn **Link**:
 - Đường dẫn: `http://lvh.me:3006/?view=stage`
-- Bật **Turn on sound** (để có giọng cô).
+- Bật **Turn on sound** (để có giọng chú).
 - Bật **Custom resolution**, nhập **1620 × 2880** (chữ nét hơn hẳn; 1080 × 1920 cũng chạy được), bấm **Apply**.
 - Bấm nút **vừa màn hình** để khung lớp học phủ kín khung điện thoại dọc.
 
 LIVE Studio không nhận chữ `localhost`; `lvh.me` là tên miền trỏ về chính máy mình nên dùng được.
-Chỉ mở trang `?view=stage` ở **một chỗ** (LIVE Studio). Mở thêm ở trình duyệt khác sẽ nghe hai giọng cô đè nhau. Trang điều khiển không phát tiếng, mở bao nhiêu tab cũng được.
+Chỉ mở trang `?view=stage` ở **một chỗ** (LIVE Studio). Mở thêm ở trình duyệt khác sẽ nghe hai giọng chú đè nhau. Trang điều khiển không phát tiếng, mở bao nhiêu tab cũng được.
 
 **Bước 5: Kết thúc buổi live**
-Trước khi tắt live, bấm nút **👋 Chào tạm biệt (xuống live)** ở trang điều khiển: cô chào cả lớp, hiện biểu ngữ tan lớp. Sau đó tắt live như bình thường. Xem lại buổi live ở nút **📊 Báo cáo** hoặc `http://localhost:3006/bao-cao`.
+Trước khi tắt live, bấm nút **👋 Chào tạm biệt (xuống live)** ở trang điều khiển: chú chào cả lớp, hiện biểu ngữ tan lớp. Sau đó tắt live như bình thường. Xem lại buổi live ở nút **📊 Báo cáo** hoặc `http://localhost:3006/bao-cao`.
 
 Dùng OBS cũng được: thêm nguồn **Browser**, cùng đường dẫn và khổ trên.
 
@@ -84,16 +84,21 @@ Dùng OBS cũng được: thêm nguồn **Browser**, cùng đường dẫn và k
 
 Chạy `npm run dev:english` hoặc bấm đúp `BAT-TIENG-ANH.bat`.
 Trang điều khiển riêng: `http://localhost:3007`; màn hình lớp học: `http://localhost:3007/?view=stage`.
-Giữ nguyên cô Ngân, lớp học, bình luận, ghế ngồi, chấm điểm, quà và giờ ra chơi.
-Mỗi tiết 20 câu đều lấy từ `src/game/cau-hoi/25-tieng-anh.txt`; cô đọc gợi ý tiếng Việt, người xem gõ từ tiếng Anh, cô đọc đáp án bằng giọng Anh.
+Giữ nguyên chú PAN, lớp học, bình luận, ghế ngồi, chấm điểm, quà và giờ ra chơi.
+Mỗi tiết 20 câu đều lấy từ `src/game/cau-hoi/25-tieng-anh.txt`; chú đọc gợi ý tiếng Việt, người xem gõ từ tiếng Anh, chú đọc đáp án bằng giọng Anh.
 Không xen câu toán, lịch sử, đố mẹo hay 2 game trắc nghiệm tiếng Việt. Dữ liệu nằm riêng ở `data-english/`, cấu hình kênh ở `settings-english.json`.
 Kiểm tra chế độ tiếng Anh: `npx tsx src/game/english.check.ts`.
 
-- **Tên lớp**: đổi chữ trên bảng hiệu.
-- **Giọng đọc trên stage**: gõ câu cho cô đọc ngay.
+- **Tên lớp**: mặc định **Học cùng chú PAN**, đổi được trên bảng hiệu và được lưu cho lần mở sau.
+- **Giọng đọc trên stage**: gõ câu cho chú đọc ngay.
 - **Tốc độ giọng**: kéo thanh trượt, có tác dụng ngay khi đang live.
 - **⏭ Qua phần tiếp / 🔄 Ván mới / 🚫 Bỏ câu này**: điều khiển lớp bằng tay. Câu bị bỏ sẽ không bao giờ hỏi lại.
 - **Chúc sinh nhật**, **ra chơi ngay**, **chơi game lớn ngay**, **👋 Chào tạm biệt**.
+- **📚 Game: Từ Vựng**: chuyển ngay sang tiết chỉ có từ tiếng Anh.
+- **🧠 Game: Hack Não**: chơi bộ câu riêng trong `hack-nao.txt`.
+- **🏫 Game: Lớp Học Chữ**: trở lại bộ câu hỗn hợp ở bản gốc.
+- **🏔️ Game: Đường lên đỉnh Fansipan / 🔔 Game: Rung Chuông Đồng**: bắt đầu game lớn ở bản gốc.
+- Khung **Chat trực tiếp** hiển thị bình luận TikTok và giả lập, có tìm kiếm và dừng cuộn.
 - Các nút giả lập để thử khi chưa live.
 
 ## Thêm hoặc sửa câu hỏi
@@ -117,7 +122,7 @@ BÁNH XÈO | Đổ bột kêu xèo xèo, ăn cuốn rau sống. | 2
 NEM RÁN | Cuốn bánh đa nem rồi chiên vàng giòn. | 2 | CHẢ GIÒ
 ```
 
-- Dòng `#` là tên chủ đề, dòng `>` là loại từ (bộ lịch sử, đuổi hình bắt chữ dùng để cô đọc "Đây là tên một vị vua gồm 11 chữ cái").
+- Dòng `#` là tên chủ đề, dòng `>` là loại từ (bộ lịch sử, đuổi hình bắt chữ dùng để chú đọc "Đây là tên một vị vua gồm 11 chữ cái").
 - Mỗi câu: `ĐÁP ÁN | gợi ý | độ khó (1 dễ, 2 vừa, 3 khó) | cách viết khác cũng tính đúng`.
 - Đáp án tối đa 14 chữ cái (đuổi hình bắt chữ 16), không tính khoảng trắng. Gợi ý không được chứa nguyên đáp án.
 - File tên đuôi `-meo`, `-su`, `-anh`, `-dh` là bộ đố mẹo, lịch sử, tiếng Anh, đuổi hình bắt chữ (chỉ hỏi ở đúng vị trí của chúng trong tiết).
@@ -129,7 +134,7 @@ Sửa xong chạy kiểm tra (mở cửa sổ lệnh trong thư mục game):
 npx tsx src/game/bank.check.ts
 ```
 
-Lời thoại của cô nằm ở `src/game/loi-thoai.ts`; các con số (thời gian mỗi câu, điểm, thứ tự câu trong tiết...) ở `src/game/config.ts`.
+Lời thoại của chú nằm ở `src/game/loi-thoai.ts`; các con số (thời gian mỗi câu, điểm, thứ tự câu trong tiết...) ở `src/game/config.ts`.
 
 ## Tuỳ chỉnh khác
 
@@ -168,4 +173,4 @@ npm run lint
 
 ## Giấy phép
 
-Mã nguồn dùng giấy phép [MIT](LICENSE). Ảnh nhân vật cô Ngân, học sinh và ảnh nền (`nhan-vat/`, `public/assets/`) thuộc về tác giả; muốn dùng cho kênh của mình thì nên thay bằng ảnh riêng.
+Mã nguồn dùng giấy phép [MIT](LICENSE). Ảnh nhân vật chú PAN, học sinh và ảnh nền (`nhan-vat/`, `public/assets/`) thuộc về tác giả; muốn dùng cho kênh của mình thì nên thay bằng ảnh riêng.

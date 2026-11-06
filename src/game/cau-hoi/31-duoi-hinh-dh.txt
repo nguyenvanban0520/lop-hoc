@@ -1,6 +1,6 @@
 # Đuổi hình bắt chữ
 # Bản riêng (2026-11-04): hình bằng emoji ghép, 5 câu mỗi tiết (GAME.roundPlan 'dh'), file đuôi -dh.
-# Cột gợi ý là CHUỖI EMOJI hiện to trên bảng đen; cô KHÔNG đọc emoji, chỉ nói "Đuổi hình bắt chữ! <loại từ>".
+# Cột gợi ý là CHUỖI EMOJI hiện to trên bảng đen; giáo viên KHÔNG đọc emoji, chỉ nói "Đuổi hình bắt chữ! <loại từ>".
 # Viết lại 2026-11-05 (chủ kênh: chưa đủ hay): ưu tiên CHƠI CHỮ đồng âm khác nghĩa, đúng chất đuổi hình bắt chữ:
 #   ngủ (😴) + nướng (🍖) = NGỦ NƯỚNG, chín (9️⃣) + chắn (🚧) = CHÍN CHẮN, nha (🦷 nha khoa) + trang (📄) = NHA TRANG.
 #   Bỏ các câu ghép nghĩa đen nhạt (🥚 + 🐔 = TRỨNG GÀ). Không dùng emoji cờ nước (máy Windows hiện thành chữ cái).

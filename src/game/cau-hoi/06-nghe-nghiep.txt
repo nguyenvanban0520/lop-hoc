@@ -2,7 +2,7 @@
 > Đây là một nghề.
 BÁC SĨ | Mặc áo blouse trắng, viết đơn thuốc mà dược sĩ mới đọc được. | 1
 Y TÁ | Người tiêm thuốc, nói "không đau đâu" ngay trước khi đau. | 1 | ĐIỀU DƯỠNG
-GIÁO VIÊN | Nghề của cô Ngân, lương không cao nhưng được học trò cà khịa lại mỗi ngày. | 1
+GIÁO VIÊN | Nghề đứng lớp giảng bài, chấm điểm và được học trò cà khịa lại mỗi ngày. | 1
 PHI CÔNG | Người lái máy bay, đi làm trên mây thật sự. | 2
 TIẾP VIÊN | Người hướng dẫn thắt dây an toàn trên máy bay, cười đẹp cả chuyến bay. | 2 | TIẾP VIÊN HÀNG KHÔNG
 NÔNG DÂN | Người làm ra hạt gạo, một nắng hai sương ngoài đồng. | 1
@@ -45,7 +45,7 @@ THỢ KIM HOÀN | Người làm nhẫn cưới và dây chuyền vàng bạc. | 
 THỢ SĂN | Người vào rừng bắt thú, nhân vật phản diện trong truyện cổ tích. | 2
 LAO CÔNG | Người quét dọn đường phố lúc cả thành phố còn đang ngủ. | 2 | CÔNG NHÂN VỆ SINH
 CÔNG NHÂN | Người làm việc trong nhà máy, đi ca, mặc đồng phục. | 1
-BẢO MẪU | Người trông trẻ thuê, kiên nhẫn hơn cả cô giáo. | 2
+BẢO MẪU | Người trông trẻ thuê, kiên nhẫn hơn cả giáo viên. | 2
 GIÚP VIỆC | Người làm việc nhà cho gia đình khác, Tết về quê là cả nhà rối loạn. | 2 | OSIN
 THUYỀN TRƯỞNG | Người chỉ huy con tàu, tàu chìm thì là người rời đi cuối cùng. | 3
 PHI HÀNH GIA | Người bay vào vũ trụ, đi làm xa nhất thế giới. | 3

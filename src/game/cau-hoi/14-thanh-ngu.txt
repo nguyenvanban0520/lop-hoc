@@ -2,7 +2,7 @@
 > Đây là ca dao tục ngữ, điền chữ còn thiếu.
 NƯỚC | "Uống ... nhớ nguồn." Nhận lương thì nhớ ai trả lương nha. | 1
 CÂY | "Ăn quả nhớ kẻ trồng ..." Uống trà sữa thì nhớ người bao. | 1
-THẦY | "Không ... đố mày làm nên." Cô Ngân thích câu này nhất. | 1
+THẦY | "Không ... đố mày làm nên." giáo viên PAN thích câu này nhất. | 1
 MƯA | "Chuồn chuồn bay thấp thì ..., bay cao thì nắng, bay vừa thì râm." App dự báo thời tiết của ông bà mình đó. | 1
 KIM | "Có công mài sắt, có ngày nên ..." Có công cày deadline, có ngày lên lương. | 1
 CHA | "Công ... như núi Thái Sơn." | 1
@@ -41,7 +41,7 @@ CÓ CÔNG MÀI SẮT | Vế đầu của câu "... có ngày nên kim." | 3
 TIÊN HỌC LỄ | Vế đầu câu khẩu hiệu quen thuộc treo trong lớp học ngày xưa, học lễ phép trước. | 3
 HẬU HỌC VĂN | Vế sau khẩu hiệu treo trên bảng đen lớp mình, học chữ sau. | 3
 ĐI MỘT NGÀY ĐÀNG | "... học một sàng khôn." Đi du lịch một chuyến là biết thêm bao nhiêu thứ. | 3
-MƯA DẦM THẤM LÂU | Dạy từ từ mà ngấm sâu, như cô Ngân nhắc gõ có dấu mỗi ngày. | 3
+MƯA DẦM THẤM LÂU | Dạy từ từ mà ngấm sâu, như giáo viên PAN nhắc gõ có dấu mỗi ngày. | 3
 NƯỚC ĐỔ ĐẦU VỊT | Nói mãi mà không vào đầu, như nhắc ai đó đi ngủ sớm. | 3
 ĐÀN GẢY TAI TRÂU | Nói chuyện với người không hiểu gì, như giải thích meme cho bố mẹ. | 3
 CƯỚP CƠM CHIM | Lấy của người yếu thế, như giành nốt miếng gà rán của bạn ăn kiêng. | 3

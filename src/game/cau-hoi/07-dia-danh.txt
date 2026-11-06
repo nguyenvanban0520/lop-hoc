@@ -34,7 +34,7 @@ CẦU VÀNG | Cây cầu được đôi bàn tay khổng lồ nâng lên ở Bà
 BÀ NÀ | Khu du lịch trên núi ở Đà Nẵng, đi cáp treo lên làng Pháp, một ngày bốn mùa. | 2
 MŨI NÉ | Đồi cát bay ở Phan Thiết, trượt cát xong cát vào tận trong tai. | 3
 PHONG NHA | Động nổi tiếng của vương quốc hang động, đi thuyền vào trong mát rượi. | 2 | PHONG NHA KẺ BÀNG
-SƠN ĐOÒNG | Hang động lớn nhất thế giới, tour thám hiểm đắt hơn cả năm lương cô Ngân. | 3
+SƠN ĐOÒNG | Hang động lớn nhất thế giới, tour thám hiểm đắt hơn cả năm lương giáo viên PAN. | 3
 TÂY NGUYÊN | Vùng đất đỏ ba dan, cà phê, cồng chiêng, dân văn phòng mơ về trồng rau nuôi cá. | 2
 BUÔN MA THUỘT | Thủ phủ cà phê Việt Nam, người sợ thứ hai nên cảm ơn nơi này. | 3
 MIỀN TÂY | Vùng sông nước, xuồng ba lá, người hiền như cục đất, đờn ca tài tử. | 2
@@ -63,7 +63,7 @@ CỦ CHI | Địa đạo nổi tiếng gần Sài Gòn, khách Tây chui xuống
 BA ĐÌNH | Quảng trường nơi Bác đọc Tuyên ngôn Độc lập ngày hai tháng chín. | 2
 > Đây là thứ gắn với đất nước Việt Nam.
 MÚA RỐI NƯỚC | Con rối diễn trên mặt ao, chú Tễu dẫn chuyện, người điều khiển đứng sau mành. | 3
-ÁO DÀI | Trang phục truyền thống, cô giáo mặc màu trắng, Tết thì cả hội chị em đi chụp. | 2
+ÁO DÀI | Trang phục truyền thống, giáo viên mặc màu trắng, Tết thì cả hội chị em đi chụp. | 2
 NÓN LÁ | Đội đầu che nắng hình chóp, mua về làm quà xong treo tường. | 2
 QUỐC KỲ | Lá cờ đỏ sao vàng, mỗi trận bóng đá là phủ kín phố. | 2 | CỜ ĐỎ SAO VÀNG
 QUỐC CA | Bài "Tiến quân ca" hát khi chào cờ sáng thứ hai. | 2

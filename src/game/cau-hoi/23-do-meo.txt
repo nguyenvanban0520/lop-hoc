@@ -1,7 +1,7 @@
 # Đố mẹo
 # Câu đố mẹo: chỉ hỏi ở câu 7 và câu 13 của mỗi tiết (GAME.roundPlan 'meo'), không lẫn vào câu chữ thường.
 # Mỗi dòng: ĐÁP ÁN | câu đố | độ khó (để 2) | cách trả lời khác cũng tính đúng (cách nhau dấu phẩy)
-> Câu đố mẹo nè, cẩn thận bị cô lừa nha.
+> Câu đố mẹo nè, cẩn thận bị giáo viên lừa nha.
 QUẦN ĐẢO | Quần gì rộng nhất thế giới? | 2
 XÃ HỘI | Xã gì đông dân nhất? | 2
 KÉO CO | Môn thể thao gì muốn thắng thì phải đi lùi? | 2
@@ -94,7 +94,7 @@ CÁI BÁT | Cái gì ngày nào cũng đựng cơm mà không ăn miếng nào? 
 BÓNG ĐÈN | Quả gì bật lên thì sáng mà không ăn được? | 2 | ĐÈN, QUẢ BÓNG ĐÈN
 BÀN CHẢI | Cái gì có lông mà sáng nào cũng chà lên răng? | 2 | BÀN CHẢI ĐÁNH RĂNG
 CÁI CẶP | Cái gì ngày nào cũng đi học mà không biết chữ? | 2 | CẶP, CẶP SÁCH, BA LÔ
-BẢNG ĐEN | Cái gì cô viết lên suốt mà không bao giờ đầy? | 2 | BẢNG
+BẢNG ĐEN | Cái gì giáo viên viết lên suốt mà không bao giờ đầy? | 2 | BẢNG
 CÁI THƯỚC | Cái gì không biết đếm mà đo được mọi thứ? | 2 | THƯỚC, THƯỚC KẺ
 QUYỂN SÁCH | Cái gì có lá mà không phải cây, có gáy mà không phải người? | 2 | SÁCH, CUỐN SÁCH, VỞ, QUYỂN VỞ
 CON MUỖI | Con gì hát vo ve bên tai mà không ai muốn nghe? | 2 | MUỖI
@@ -103,7 +103,7 @@ BÓNG ĐÁ | Môn gì hai mươi hai người tranh nhau một quả bóng? | 2 
 NHÀ VỆ SINH | Phòng gì ai cũng phải vào mà chẳng ai muốn ở lâu? | 2 | PHÒNG VỆ SINH, TOILET, WC
 CHỮ O | Chữ cái gì tròn như quả trứng? | 2 | O
 TRÁI ĐẤT | Quả gì to nhất mà không ai ăn được? | 2 | QUẢ ĐẤT
-# Thêm 2026-11-05: kiểu câu Nhanh Như Chớp (lừa logic, chơi chữ, nói lái), viết lại bằng lời cô Ngân
+# Thêm 2026-11-05: kiểu câu Nhanh Như Chớp (lừa logic, chơi chữ, nói lái), viết lại bằng lời giáo viên PAN
 CHUỘT MICKEY | Chuột nào đi bằng hai chân, đeo găng tay trắng, nổi tiếng khắp thế giới? | 1 | MICKEY
 CON NGƯỜI | Sở thú bốc cháy, con gì chạy ra ngoài đầu tiên? | 2 | NGƯỜI
 TẤT CẢ | Một năm có mấy tháng có ngày hai mươi tám? | 2 | TẤT CẢ CÁC THÁNG, MƯỜI HAI THÁNG

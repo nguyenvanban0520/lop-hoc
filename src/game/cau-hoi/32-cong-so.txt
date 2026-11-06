@@ -5,7 +5,7 @@ SẾP | Người nhắn "em ơi" lúc mười giờ tối, kèm theo một đố
 TĂNG CA | Ở lại công ty khi mọi người đã về, nghe như được thêm tiền mà thường chỉ thêm mệt. | 1 | OT, LÀM THÊM GIỜ
 HỌP | Một tiếng ngồi nói chuyện cho việc lẽ ra chỉ cần một tin nhắn. | 1 | MEETING
 NGHỈ PHÉP | Có ghi trong hợp đồng hẳn hoi, mà xin sếp duyệt thì khó như lên trời. | 2
-THỨ HAI | Ngày trong tuần ai cũng muốn xoá khỏi lịch, cô Ngân sợ nhất. | 1
+THỨ HAI | Ngày trong tuần ai cũng muốn xoá khỏi lịch, giáo viên PAN sợ nhất. | 1
 THỨ SÁU | Ngày làm việc cuối cùng trong tuần, tới chiều là không ai còn tâm trí làm gì. | 1
 CUỐI THÁNG | Khoảng thời gian ví mỏng nhất, mì gói bán chạy nhất. | 1
 THƯỞNG TẾT | Khoản tiền cả năm ngóng, nhận rồi vừa đủ mua vé xe về quê. | 2

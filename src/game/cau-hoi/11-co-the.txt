@@ -2,7 +2,7 @@
 > Đây là bộ phận cơ thể.
 MẮT | Dùng để nhìn, lướt điện thoại tới hai giờ sáng thì thâm quầng như gấu trúc. | 1 | CON MẮT
 MŨI | Dùng để ngửi, đi ngang quán trà sữa là tự quay đầu xe. | 1 | CÁI MŨI
-MIỆNG | Dùng để ăn và nói, cô Ngân dùng nhiều nhất trong lớp. | 1 | CÁI MIỆNG
+MIỆNG | Dùng để ăn và nói, giáo viên PAN dùng nhiều nhất trong lớp. | 1 | CÁI MIỆNG
 TAI | Dùng để nghe, sếp gọi tên thì không nghe, ai nói "trà sữa" là nghe liền. | 1 | CÁI TAI
 RĂNG | Đánh mỗi sáng tối cho trắng, đi niềng tốn cả mấy chục triệu. | 1 | CÁI RĂNG
 LƯỠI | Nếm vị chua cay mặn ngọt, "... không xương nhiều đường lắt léo". | 1 | CÁI LƯỠI
@@ -36,7 +36,7 @@ DA | Lớp ngoài cùng cơ thể, chị em skincare mười bước mỗi tối
 MỒ HÔI | Chảy ra khi nóng hay chạy nhiều, "đổ ... sôi nước mắt" mới kiếm ra tiền. | 2
 NƯỚC MẮT | Chảy ra khi khóc, xem phim Hàn là rơi lã chã. | 1
 > Đây là chuyện cơ thể, sức khỏe.
-NỤ CƯỜI | Thứ đẹp nhất trên gương mặt, cô Ngân cười mỗi khi có bạn trả lời đúng. | 1
+NỤ CƯỜI | Thứ đẹp nhất trên gương mặt, giáo viên PAN cười mỗi khi có bạn trả lời đúng. | 1
 LÚM ĐỒNG TIỀN | Vết lõm xinh trên má khi cười, có là được khen duyên. | 3
 NỐT RUỒI | Chấm nhỏ trên da, xem tướng bảo có chỗ này là giàu. | 2
 TÀN NHANG | Đốm nâu nhỏ trên mặt, đi nắng không che là mọc thêm. | 3

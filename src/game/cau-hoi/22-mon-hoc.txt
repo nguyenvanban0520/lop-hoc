@@ -17,7 +17,7 @@ GIÁO DỤC CÔNG DÂN | Môn dạy đạo đức, pháp luật, đi làm rồi 
 CÔNG NGHỆ | Môn học trồng cây, nấu ăn, lắp mạch điện, sách có nhưng ít khi thực hành. | 3
 ĐẠO ĐỨC | Môn dạy lễ phép ở tiểu học, đi thưa về chào. | 2
 TẬP VIẾT | Tiết tô chữ trong vở ô li, ngồi thẳng lưng, cầm bút đúng cách. | 2
-CHÍNH TẢ | Cô đọc cả lớp viết, sai dấu là trừ điểm, như lớp mình gõ thiếu dấu là không tính. | 2
+CHÍNH TẢ | Giáo viên đọc cả lớp viết, sai dấu là trừ điểm, như lớp mình gõ thiếu dấu là không tính. | 2
 KỂ CHUYỆN | Tiết đứng trước lớp kể lại câu chuyện, run tới quên hết. | 2
 KHOA HỌC | Môn tìm hiểu tự nhiên ở lớp bốn, lớp năm, học về nước, không khí, ánh sáng. | 2
 HÌNH HỌC | Phần toán về tam giác, đường tròn, vẽ thêm một đường phụ là ra. | 2
@@ -28,6 +28,6 @@ LUYỆN TỪ VÀ CÂU | Phân môn tiếng Việt học danh từ, động từ,
 TẬP ĐỌC | Đứng lên đọc to bài văn trong sách, đọc vấp là cả lớp cười. | 2
 TẬP LÀM VĂN | Phân môn viết bài văn ngắn, đề nào cũng mở bài "Em có một người mẹ". | 3
 THỦ CÔNG | Môn cắt dán giấy màu, gấp thuyền gấp máy bay, dính keo đầy tay. | 2
-HÁT NHẠC | Tiết cả lớp vỗ tay hát theo cô, đứa hát to nhất thường lệch tông. | 2
+HÁT NHẠC | Tiết cả lớp vỗ tay hát theo giáo viên, đứa hát to nhất thường lệch tông. | 2
 LÝ THUYẾT | Phần học trên sách chưa làm thật, nói thì hay mà làm thì khác. | 3
 THỰC HÀNH | Phần làm thật trong phòng thí nghiệm hay xưởng, đi làm mới thấy quan trọng. | 3

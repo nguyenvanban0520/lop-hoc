@@ -29,7 +29,7 @@ BÀN LÀ | Làm phẳng áo nhăn trước giờ đi làm năm phút. | 2 | BÀN
 MÁY SẤY TÓC | Thổi gió nóng cho tóc khô, ồn tới mức không nghe ai nói gì. | 3
 ĐỒNG HỒ | Có kim giờ, kim phút, kim giây, ngồi họp nhìn nó mười lần. | 2
 ĐỒNG HỒ BÁO THỨC | Reng reng mỗi sáng, bị đập tắt rồi ngủ tiếp. | 3
-ĐIỆN THOẠI | Thứ các bạn đang cầm để học với cô, rời tay năm phút là thấy thiếu. | 1
+ĐIỆN THOẠI | Thứ các bạn đang cầm để học với giáo viên, rời tay năm phút là thấy thiếu. | 1
 MÁY TÍNH | Gõ phím, lướt web, làm báo cáo, sếp đi qua thì chuyển tab. | 2 | LAPTOP
 CHUỘT MÁY TÍNH | Cầm di di trên bàn để trỏ trên màn hình, tên giống một con vật. | 3
 BÀN PHÍM | Có các chữ Q W E R T Y, gõ mạnh lúc bực bội. | 2
@@ -68,7 +68,7 @@ CÁI THANG | Leo lên chỗ cao thay bóng đèn, phải có người giữ châ
 CÁI BÚA | Đóng đinh, gõ trật thì trúng ngón tay. | 1 | BÚA
 CÁI KÌM | Kẹp, bẻ dây thép, trong thùng đồ nghề của bố. | 2 | KÌM
 TUA VÍT | Vặn ốc vít, đầu dẹt hay đầu chữ thập. | 2 | TUỐC NƠ VÍT
-BÌNH HOA | Cắm hoa trang trí, trên bàn cô Ngân đang có một cái. | 2 | LỌ HOA
+BÌNH HOA | Cắm hoa trang trí, trên bàn giáo viên PAN đang có một cái. | 2 | LỌ HOA
 RÈM CỬA | Kéo che nắng ở cửa sổ, chủ nhật kéo kín ngủ tới trưa. | 2
 THẢM | Trải dưới sàn cho êm chân, mèo thích nằm nhất nhà. | 2
 CỬA SỔ | Mở ra cho gió vào, ngồi cạnh nó trong lớp là chỗ ngắm trời đẹp nhất. | 1
