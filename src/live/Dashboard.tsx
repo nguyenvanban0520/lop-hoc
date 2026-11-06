@@ -2,6 +2,8 @@ import { useState, type ReactNode } from 'react';
 import type { LiveStatus } from './types';
 import { emitTest, sendControl } from './page';
 import { LiveChat } from './LiveChat';
+import { VoiceSelector } from './VoiceSelector';
+import { MusicControls } from './MusicControls';
 import { ENGLISH_ONLY } from '../game/mode';
 
 const FAKE_NAMES = ['Lan Anh', 'Minh Tuấn', 'Bé Na 🌸', 'Hoàng Long', 'Thu Trang', 'Quốc Bảo', 'duyanh99', '𝑵𝒈𝒐̣𝒄 𝑨𝒏𝒉'];
@@ -121,7 +123,6 @@ export function Dashboard({
               </Btn>
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
-              <RateSlider />
               <span className="ml-2 text-slate-400">Tên lớp</span>
               <input
                 className="w-32 rounded-lg bg-slate-800 px-2 py-1"
@@ -141,6 +142,8 @@ export function Dashboard({
             </div>
           </Card>
 
+          <VoiceSelector />
+          <MusicControls />
           {extra}
 
           <details className="rounded-2xl bg-slate-900 p-3 ring-1 ring-slate-800">
@@ -237,31 +240,4 @@ function localStorageSet(k: string, v: string) {
   } catch {
     // bỏ qua
   }
-}
-
-// Tốc độ giọng MC: kéo là gửi sang trang stage, stage nhớ mức đã chỉnh
-function RateSlider() {
-  const [rate, setRate] = useState(() => {
-    try {
-      return Number(localStorage.getItem('voice-rate')) || 1.0;
-    } catch {
-      return 1.0;
-    }
-  });
-  const change = (r: number) => {
-    setRate(r);
-    try {
-      localStorage.setItem('voice-rate', String(r));
-    } catch {
-      // bỏ qua
-    }
-    void sendControl('setRate', String(r));
-  };
-  return (
-    <label className="flex items-center gap-1.5 text-slate-400">
-      Tốc độ giọng
-      <input type="range" min={0.8} max={1.5} step={0.05} value={rate} onChange={(e) => change(Number(e.target.value))} className="w-28 accent-amber-500" />
-      <b className="w-10 text-slate-200">{rate.toFixed(2)}×</b>
-    </label>
-  );
 }

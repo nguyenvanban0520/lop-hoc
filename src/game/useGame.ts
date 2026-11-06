@@ -116,6 +116,7 @@ export function useGame() {
 
   useLiveEvents({
     onStatus: setStatus,
+    onMusic: (data) => { if (IS_STAGE) sfx.configureMusic(data); },
     onSpeaker: (d) => setStageCount(d.count),
     onGameState: (s) => {
       if (!IS_STAGE) setView(s as StageView);
@@ -204,6 +205,9 @@ export function useGame() {
       sfx.volume = 0;
     }
     sfx.loadFiles();
+    const unlockAudio = () => sfx.unlock();
+    window.addEventListener('pointerdown', unlockAudio);
+    window.addEventListener('keydown', unlockAudio);
     let prevView: StageView | null = null;
     let stop = false;
     const timers: ReturnType<typeof setInterval>[] = [];
@@ -283,8 +287,8 @@ export function useGame() {
           // nhạc nền EDM game lớn: chú đang đọc thì nhạc lùi xa cho rõ giọng; chờ trả lời thì sập sình, 5 giây cuối dồn dập
           const sh = room.show;
           const step = sh?.steps[sh.i]?.k;
-          const busy = mainSpeaking.current > 0;
-          sfx.music(sh?.kind ?? null, !sh || busy ? 0 : room.showAsking() ? (room.phaseEndsAt - now <= 5000 ? 2 : 1) : step === 'gather' || step === 'honor' ? 1 : 0);
+          const busy = mainSpeaking.current > 0 || voice.busy;
+          sfx.music(voice.enabled && !MUTED && !room.goodbyeAt ? sh?.kind ?? 'classroom' : null, busy ? 0 : !sh ? 1 : room.showAsking() ? (room.phaseEndsAt - now <= 5000 ? 2 : 1) : step === 'gather' || step === 'honor' ? 1 : 0);
           if (!dirty.current && now - lastSent < 1000) return;
           dirty.current = false;
           const v = { ...room.view(now), weekTop: weekTop.current, todayTop: dayBoard(todayTop.current, room.weekDelta), talkTop: dayBoard(talkTop.current, room.talkDelta) };
@@ -305,6 +309,9 @@ export function useGame() {
     return () => {
       stop = true;
       timers.forEach(clearInterval);
+      sfx.music(null, 0);
+      window.removeEventListener('pointerdown', unlockAudio);
+      window.removeEventListener('keydown', unlockAudio);
       window.removeEventListener('beforeunload', save);
     };
   }, []);

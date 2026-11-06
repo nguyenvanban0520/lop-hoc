@@ -22,11 +22,47 @@ const NAMES: SfxName[] = ['ting', 'drum', 'go', 'tick', 'bell', 'pop', 'clap', '
 
 /** Nhạc nền 2 game lớn: Fansipan 128 BPM La thứ, Rung Chuông Đồng 140 BPM Rê thứ. Mỗi ô là 1 nốt móc kép (1/16) */
 const TRACKS = {
+  classroom: { bpm: 78, chords: [[261.6, 329.6, 392], [220, 261.6, 329.6], [174.6, 220, 261.6], [196, 246.9, 293.7]] },
   everest: { bpm: 128, chords: [[220, 261.6, 329.6], [174.6, 220, 261.6], [261.6, 329.6, 392], [196, 246.9, 293.7]] },
   chuong: { bpm: 140, chords: [[293.7, 349.2, 440], [233.1, 293.7, 349.2], [174.6, 220, 261.6], [261.6, 329.6, 392]] },
 } as const;
 
 class Sfx {
+  unlock() {
+    try {
+      this.ctx ??= new AudioContext();
+      if (this.ctx.state === 'suspended') void this.ctx.resume().catch(() => {});
+      if (this.fileWanted && this.musicEnabled) this.playFile();
+    } catch { /* Trình duyệt chưa cho phép âm thanh. */ }
+  }
+  musicEnabled = true;
+  private musicVolume = 0.3;
+  private customUrl = '';
+  private customAudio: HTMLAudioElement | null = null;
+  private fileWanted = false;
+  private fileStarting = false;
+  private fileRetryAt = 0;
+  configureMusic(data: { enabled: boolean; volume: number; url: string }) {
+    this.musicVolume = Math.max(0, Math.min(1, data.volume));
+    if (this.customUrl !== data.url) {
+      this.customAudio?.pause();
+      if (this.customAudio) { this.customAudio.removeAttribute('src'); this.customAudio.load(); }
+      this.customUrl = data.url;
+      this.customAudio = data.url ? new Audio(data.url) : null;
+      if (this.customAudio) { this.customAudio.loop = true; this.customAudio.preload = 'auto'; this.customAudio.volume = this.musicVolume * 0.25; }
+      this.fileRetryAt = 0;
+    }
+    this.setMusicEnabled(data.enabled);
+  }
+  private playFile() {
+    if (!this.customAudio || this.fileStarting || !this.customAudio.paused || Date.now() < this.fileRetryAt) return;
+    this.fileStarting = true;
+    void this.customAudio.play().catch(() => { this.fileRetryAt = Date.now() + 3000; }).finally(() => { this.fileStarting = false; });
+  }
+  setMusicEnabled(enabled: boolean) {
+    this.musicEnabled = enabled;
+    if (!enabled) this.music(null, 0);
+  }
   volume = 0.35; // nhỏ hơn giọng chú để không lấn tiếng
   // ---------- nhạc nền EDM ----------
   private track: keyof typeof TRACKS | null = null;
@@ -39,10 +75,22 @@ class Sfx {
 
   /** Gọi mỗi nhịp game: bật / tắt / đổi độ dồn dập của nhạc nền game lớn */
   music(track: keyof typeof TRACKS | null, level: number) {
-    if (this.volume <= 0) track = null;
+    if (!this.musicEnabled || this.volume <= 0) track = null;
+    this.fileWanted = !!track;
+    if (this.customAudio) {
+      this.synthMusic(null, 0);
+      this.customAudio.volume = Math.max(0, Math.min(1, this.musicVolume * (level === 0 ? 0.25 : 1)));
+      if (track) this.playFile(); else this.customAudio.pause();
+      return;
+    }
+    this.synthMusic(track, level);
+  }
+
+  private synthMusic(track: keyof typeof TRACKS | null, level: number) {
+    if (this.volume <= 0 || !this.musicEnabled) track = null;
     this.level = level;
     if (track === this.track) {
-      if (this.musicOut && this.ctx) this.musicOut.gain.setTargetAtTime(this.volume * (level === 0 ? 0.35 : 0.75), this.ctx.currentTime, 0.15);
+      if (this.musicOut && this.ctx) this.musicOut.gain.setTargetAtTime(this.volume * (this.musicVolume / 0.3) * (track === 'classroom' ? level === 0 ? 0.08 : 0.3 : level === 0 ? 0.35 : 0.75), this.ctx.currentTime, 0.15);
       return;
     }
     this.track = track;
@@ -60,7 +108,7 @@ class Sfx {
       if (this.ctx.state === 'suspended') void this.ctx.resume();
       const out = this.ctx.createGain();
       out.gain.value = 0.0001;
-      out.gain.setTargetAtTime(this.volume * 0.35, this.ctx.currentTime, 0.4);
+      out.gain.setTargetAtTime(this.volume * (this.musicVolume / 0.3) * (track === 'classroom' ? 0.08 : 0.35), this.ctx.currentTime, 0.4);
       out.connect(this.ctx.destination);
       this.musicOut = out;
       this.nextAt = this.ctx.currentTime + 0.1;
@@ -78,7 +126,13 @@ class Sfx {
     const tr = TRACKS[this.track];
     const sixteenth = 60 / tr.bpm / 4;
     while (this.nextAt < c.currentTime + 0.12) {
-      beat(c, out, tr.chords[Math.floor(this.step / 16) % 4], this.step % 16, this.nextAt, sixteenth, this.level);
+      const chord = tr.chords[Math.floor(this.step / 16) % 4];
+      if (this.track === 'classroom') {
+        const pos = this.step % 16;
+        if (pos === 0) chord.forEach((f) => toneAt(c, out, 'sine', f / 2, this.nextAt, sixteenth * 14, 0.12));
+        if (pos % 4 === 0) toneAt(c, out, 'triangle', chord[[0, 2, 1, 2][pos / 4]], this.nextAt, sixteenth * 3.5, 0.22);
+        if (pos === 0 || pos === 8) toneAt(c, out, 'sine', 85, this.nextAt, 0.13, 0.18, 48);
+      } else beat(c, out, chord, this.step % 16, this.nextAt, sixteenth, this.level);
       this.nextAt += sixteenth;
       this.step++;
     }

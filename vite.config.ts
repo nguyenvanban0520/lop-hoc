@@ -9,7 +9,7 @@ export default defineConfig({
     allowedHosts: ['lvh.me'],
     // Sổ lớp được ghi mỗi 20 giây; không được coi dữ liệu này là mã nguồn để tải lại stage.
     watch: {
-      ignored: ['**/data/**', '**/data-*/**', '**/settings*.json', '**/.npm-cache/**'],
+      ignored: ['**/data/**', '**/data-*/**', '**/settings*.json', '**/.npm-cache/**', '**/music-uploads/**'],
     },
   },
 });

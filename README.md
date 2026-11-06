@@ -91,7 +91,11 @@ Kiểm tra chế độ tiếng Anh: `npx tsx src/game/english.check.ts`.
 
 - **Tên lớp**: mặc định **Học cùng chú PAN**, đổi được trên bảng hiệu và được lưu cho lần mở sau.
 - **Giọng đọc trên stage**: gõ câu cho chú đọc ngay.
-- **Tốc độ giọng**: kéo thanh trượt, có tác dụng ngay khi đang live.
+- **Tốc độ giọng**: kéo từ 0,50× đến 1,50×, thả để tự lưu; áp dụng từ câu đọc tiếp theo.
+- **Cao độ giọng**: kéo từ −30% (trầm hơn) đến +30% (cao hơn), thả để tự lưu. Nút **Giọng tự nhiên** đưa tốc độ về 1× và cao độ về 0%. Các mức này lưu riêng theo bản game, không cần khởi động lại. Cao độ áp dụng khi dùng Edge TTS; giọng Google dự phòng không hỗ trợ tùy chỉnh này.
+- **Giọng giáo viên**: chọn Nam Minh (nam) hoặc Hoài My (nữ), tự lưu và áp dụng từ câu đọc tiếp theo, không cần khởi động lại. Lựa chọn này ưu tiên hơn `TTS_VOICE`; mỗi bản game lưu giọng riêng. Từ tiếng Anh vẫn đọc bằng giọng Anh.
+- **🎵 Nhạc nền**: bấm **Bật nhạc nền / Tắt nhạc nền**, tự lưu cho lần mở sau. Lớp học dùng nhạc nhẹ tự tạo, game lớn dùng nhạc riêng; nhạc giảm âm lượng khi giáo viên nói. Chỉ màn hình stage phát nhạc, trang điều khiển im lặng; nút này không tắt giọng đọc hay hiệu ứng trả lời đúng. Nếu trình duyệt chặn âm thanh tự động, bấm vào màn hình stage một lần để cho phép phát tiếng.
+- **📁 Chọn file nhạc**: tải MP3 hoặc WAV tối đa 30 MB từ máy. Nhạc được lưu trong `music-uploads/`, tự phát lặp trên stage, thay cho nhạc mặc định trong mọi chế độ. Thanh **Âm lượng** chỉnh 0–100%, tự lưu khi thả. Có thể chuyển qua lại **Dùng nhạc mặc định / Dùng file đã tải**; tải file mới sẽ thay file trước. File nhạc được giữ riêng theo bản game và không đưa lên GitHub.
 - **⏭ Qua phần tiếp / 🔄 Ván mới / 🚫 Bỏ câu này**: điều khiển lớp bằng tay. Câu bị bỏ sẽ không bao giờ hỏi lại.
 - **Chúc sinh nhật**, **ra chơi ngay**, **chơi game lớn ngay**, **👋 Chào tạm biệt**.
 - **📚 Game: Từ Vựng**: chuyển ngay sang tiết chỉ có từ tiếng Anh.

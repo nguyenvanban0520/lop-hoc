@@ -45,11 +45,13 @@ export interface LikeEvent {
 }
 
 export interface ControlCommand {
-  action: 'speak' | 'setRate' | 'reset' | 'setName' | 'custom';
+  action: 'speak' | 'setRate' | 'setPitch' | 'setVoice' | 'setMusic' | 'setMusicVolume' | 'setMusicSource' | 'reset' | 'setName' | 'custom';
   text?: string;
 }
 
 export interface LiveHandlers {
+  onMusic?: (data: { enabled: boolean; volume: number; name: string; custom: boolean; url: string }) => void;
+  onVoice?: (data: { selected: string; rate: number; pitch: number; options: { id: string; label: string }[] }) => void;
   onStatus?: (s: LiveStatus) => void;
   onChat?: (e: ChatEvent) => void;
   onGift?: (e: GiftEvent) => void;

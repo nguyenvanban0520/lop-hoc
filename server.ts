@@ -12,6 +12,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
+import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'url';
 import { TikTokLiveConnection, WebcastEvent, ControlEvent } from 'tiktok-live-connector';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
@@ -75,7 +76,11 @@ const SETTINGS_FILE = path.join(__dirname, process.env.ENGLISH_ONLY === '1' ? 's
 let lastNameControl: { action: string; text: string } | null = null;
 // tài khoản TikTok đang cần giữ kết nối: rớt thì tự kết nối lại, tắt server bật lại cũng tự kết nối
 let wantUser = '';
-let settings: { channelName?: string; tiktokUser?: string } = {};
+const VOICE_OPTIONS = [
+  { id: 'vi-VN-NamMinhNeural', label: 'Nam Minh · Giọng nam' },
+  { id: 'vi-VN-HoaiMyNeural', label: 'Hoài My · Giọng nữ' },
+];
+let settings: { channelName?: string; tiktokUser?: string; ttsVoice?: string; voiceRate?: number; voicePitch?: number; musicEnabled?: boolean; musicVolume?: number; musicFile?: string; musicName?: string; musicSource?: 'file' | 'default' } = {};
 try {
   settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8'));
   if (typeof settings.channelName === 'string' && settings.channelName.trim()) {
@@ -86,13 +91,51 @@ try {
   // chưa lưu tên nào: dùng tên mặc định trong config.ts
 }
 const saveSettings = (patch: typeof settings) => {
-  settings = { ...settings, ...patch };
+  const nextSettings = { ...settings, ...patch };
   try {
-    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(nextSettings, null, 2));
+    settings = nextSettings;
+    return true;
   } catch (err) {
     console.error('Không lưu được settings.json:', err);
+    return false;
   }
 };
+const selectedVoice = () => settings.ttsVoice || TTS_VOICE;
+const voiceState = () => ({ selected: selectedVoice(), rate: settings.voiceRate ?? 1, pitch: settings.voicePitch ?? (Number.parseFloat(TTS_PITCH) || 0), options: VOICE_OPTIONS.some((v) => v.id === selectedVoice())
+  ? VOICE_OPTIONS : [...VOICE_OPTIONS, { id: selectedVoice(), label: 'Giọng cấu hình từ TTS_VOICE' }] });
+app.get('/api/tts/voice', (_req, res) => res.json(voiceState()));
+const MUSIC_DIR = path.join(__dirname, 'music-uploads', process.env.ENGLISH_ONLY === '1' ? 'english' : 'classroom');
+const musicState = () => ({ enabled: settings.musicEnabled ?? true, volume: settings.musicVolume ?? 0.3,
+  name: settings.musicName ?? '', custom: settings.musicSource === 'file' && !!settings.musicFile,
+  url: settings.musicSource === 'file' && settings.musicFile ? `/api/music/files/${encodeURIComponent(settings.musicFile)}` : '' });
+app.get('/api/music', (_req, res) => res.json(musicState()));
+app.use('/api/music/files', express.static(MUSIC_DIR, { dotfiles: 'deny', fallthrough: false }));
+app.post('/api/music/upload', express.raw({ type: 'application/octet-stream', limit: '30mb' }), (req, res) => {
+  const bytes = req.body;
+  if (!Buffer.isBuffer(bytes) || bytes.length < 12) return res.status(400).json({ success: false, error: 'File nhạc trống hoặc không hợp lệ' });
+  const mp3 = bytes.toString('ascii', 0, 3) === 'ID3' || (bytes[0] === 255 && (bytes[1] & 224) === 224);
+  const wav = bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WAVE';
+  if (!mp3 && !wav) return res.status(400).json({ success: false, error: 'Chọn file MP3 hoặc WAV hợp lệ nhé' });
+  let name = 'Nhạc nền';
+  try { name = decodeURIComponent(String(req.headers['x-file-name'] || name)).replace(/[\x00-\x1f\x7f]/g, '').slice(0, 160); } catch { /* Giữ tên mặc định. */ }
+  const file = `${randomUUID()}.${mp3 ? 'mp3' : 'wav'}`;
+  const target = path.join(MUSIC_DIR, file);
+  const previous = settings.musicFile;
+  try {
+    fs.mkdirSync(MUSIC_DIR, { recursive: true });
+    fs.writeFileSync(target, bytes);
+    if (!saveSettings({ musicFile: file, musicName: name, musicSource: 'file', musicEnabled: true })) {
+      fs.unlinkSync(target);
+      return res.status(500).json({ success: false, error: 'Không lưu được nhạc nền' });
+    }
+    if (previous && /^[a-f0-9-]+\.(mp3|wav)$/.test(previous)) {
+      try { fs.unlinkSync(path.join(MUSIC_DIR, previous)); } catch { /* File cũ có thể đã được xóa. */ }
+    }
+    broadcast('music', musicState());
+    return res.json({ success: true, ...musicState() });
+  } catch { return res.status(500).json({ success: false, error: 'Không ghi được file nhạc, bạn thử lại nhé' }); }
+});
 
 function broadcast(eventType: string, data: unknown) {
   const payload = `event: ${eventType}\ndata: ${JSON.stringify(data)}\n\n`;
@@ -111,6 +154,8 @@ app.get('/api/tiktok/events', (req, res) => {
   res.setHeader('Connection', 'keep-alive');
   res.flushHeaders?.();
   res.write(`event: status\ndata: ${JSON.stringify(liveStats)}\n\n`);
+  res.write(`event: ttsvoice\ndata: ${JSON.stringify(voiceState())}\n\n`);
+  res.write(`event: music\ndata: ${JSON.stringify(musicState())}\n\n`);
   if (lastRateControl) res.write(`event: control\ndata: ${JSON.stringify(lastRateControl)}\n\n`);
   if (lastNameControl) res.write(`event: control\ndata: ${JSON.stringify(lastNameControl)}\n\n`);
   sseClients.push(res);
@@ -346,7 +391,7 @@ app.post('/api/tiktok/disconnect', (_req, res) => {
 });
 
 // ---------- Lệnh từ trang điều khiển (chỉ trang stage làm theo) ----------
-const CONTROL_ACTIONS = ['speak', 'setRate', 'reset', 'setName', 'custom'];
+const CONTROL_ACTIONS = ['speak', 'setRate', 'setPitch', 'setVoice', 'setMusic', 'setMusicVolume', 'setMusicSource', 'reset', 'setName', 'custom'];
 app.post('/api/control', (req, res) => {
   const { action, text } = req.body || {};
   if (!CONTROL_ACTIONS.includes(action)) return res.status(400).json({ success: false, error: 'Lệnh không hợp lệ' });
@@ -354,7 +399,32 @@ app.post('/api/control', (req, res) => {
     return res.status(400).json({ success: false, error: 'Chưa nhập nội dung cần đọc' });
   }
   const payload = { action, text: typeof text === 'string' ? text.trim().slice(0, 1000) : undefined };
-  if (action === 'setRate' && payload.text) lastRateControl = { action, text: payload.text };
+  if (action === 'setMusic') {
+    if (payload.text !== 'on' && payload.text !== 'off') return res.status(400).json({ success: false, error: 'Tùy chọn nhạc không hợp lệ' });
+    if (!saveSettings({ musicEnabled: payload.text === 'on' })) return res.status(500).json({ success: false, error: 'Không lưu được tùy chọn nhạc' });
+    broadcast('music', musicState());
+  }
+  if (action === 'setMusicVolume' || action === 'setMusicSource') {
+    const value = Number(payload.text);
+    if (action === 'setMusicVolume' && (!payload.text || !Number.isFinite(value) || value < 0 || value > 1)) return res.status(400).json({ success: false, error: 'Âm lượng phải từ 0 đến 100%' });
+    if (action === 'setMusicSource' && payload.text !== 'default' && payload.text !== 'file') return res.status(400).json({ success: false, error: 'Nguồn nhạc không hợp lệ' });
+    if (action === 'setMusicSource' && payload.text === 'file' && !settings.musicFile) return res.status(400).json({ success: false, error: 'Bạn chưa tải file nhạc lên' });
+    if (!saveSettings(action === 'setMusicVolume' ? { musicVolume: value } : { musicSource: payload.text as 'file' | 'default' })) return res.status(500).json({ success: false, error: 'Không lưu được tùy chọn nhạc' });
+    broadcast('music', musicState());
+  }
+  if (action === 'setRate' || action === 'setPitch') {
+    const value = Number(payload.text);
+    const valid = payload.text && Number.isFinite(value) && (action === 'setRate' ? value >= 0.5 && value <= 1.5 : value >= -30 && value <= 30);
+    if (!valid) return res.status(400).json({ success: false, error: 'Mức điều chỉnh không hợp lệ' });
+    if (!saveSettings(action === 'setRate' ? { voiceRate: value } : { voicePitch: value })) return res.status(500).json({ success: false, error: 'Không lưu được tùy chỉnh giọng' });
+    if (action === 'setRate') lastRateControl = { action, text: String(value) };
+    broadcast('ttsvoice', voiceState());
+  }
+  if (action === 'setVoice') {
+    if (!VOICE_OPTIONS.some((v) => v.id === payload.text)) return res.status(400).json({ success: false, error: 'Giọng đọc không hợp lệ' });
+    if (!saveSettings({ ttsVoice: payload.text })) return res.status(500).json({ success: false, error: 'Không lưu được giọng đọc, bạn thử lại nhé' });
+    broadcast('ttsvoice', voiceState());
+  }
   if (action === 'setName') {
     // Chỉ chữ thường, tối đa 40 ký tự
     const name = (payload.text || '').replace(/[\x00-\x1f\x7f]/g, '').trim().slice(0, 40);
@@ -406,8 +476,8 @@ function splitText(text: string, max = 190): string[] {
 let edgeChain: Promise<unknown> = Promise.resolve();
 const edgeInflight = new Map<string, Promise<Buffer>>();
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-function edgeTts(text: string, rate: number, hype = false, voiceName = TTS_VOICE): Promise<Buffer> {
-  const key = `${voiceName}|${rate}|${hype}|${text}`;
+function edgeTts(text: string, rate: number, hype = false, voiceName = TTS_VOICE, pitch = TTS_PITCH): Promise<Buffer> {
+  const key = `${voiceName}|${rate}|${pitch}|${hype}|${text}`;
   const running = edgeInflight.get(key);
   if (running) return running;
   const job = edgeChain.then(async () => {
@@ -415,7 +485,7 @@ function edgeTts(text: string, rate: number, hype = false, voiceName = TTS_VOICE
     for (const wait of [0, 2000, 5000, 10000]) {
       if (wait) await sleep(wait);
       try {
-        return await edgeTtsOnce(text, rate, hype, voiceName);
+        return await edgeTtsOnce(text, rate, hype, voiceName, pitch);
       } catch (err) {
         last = err;
       }
@@ -428,13 +498,13 @@ function edgeTts(text: string, rate: number, hype = false, voiceName = TTS_VOICE
   return job;
 }
 
-async function edgeTtsOnce(text: string, rate: number, hype = false, voiceName = TTS_VOICE): Promise<Buffer> {
+async function edgeTtsOnce(text: string, rate: number, hype = false, voiceName = TTS_VOICE, pitch = TTS_PITCH): Promise<Buffer> {
   const tts = new MsEdgeTTS();
   try {
     await tts.setMetadata(voiceName, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
     const { audioStream } = tts.toStream(escapeXml(text), {
       rate: `${rate >= 1 ? '+' : ''}${Math.round((rate - 1) * 100)}%`,
-      pitch: TTS_PITCH,
+      pitch,
       volume: hype ? '+40%' : '+0%',
     });
     const chunks: Buffer[] = [];
@@ -471,18 +541,20 @@ app.get('/api/tts', async (req, res) => {
   try {
     const text = String(req.query.text || '').trim().slice(0, 1500);
     if (!text) return res.status(400).send('Thiếu text');
-    const rate = Math.min(1.5, Math.max(0.5, Number(req.query.rate) || 1));
+    const rate = settings.voiceRate ?? Math.min(1.5, Math.max(0.5, Number(req.query.rate) || 1));
+    const pitchValue = settings.voicePitch;
+    const pitch = pitchValue === undefined ? TTS_PITCH : `${pitchValue >= 0 ? '+' : ''}${pitchValue}%`;
     const hype = req.query.hype === '1';
     // 2 MC: nam (mặc định) và nữ, thêm giọng tiếng Anh để đọc từ tiếng Anh cho chuẩn.
     // Chỉ nhận các giọng này, không cho truyền tên giọng tuỳ ý.
-    const voiceName = req.query.v === 'f' ? 'vi-VN-HoaiMyNeural' : req.query.v === 'en' ? 'en-US-AnaNeural' : TTS_VOICE;
-    const key = `${voiceName}|${rate}|${hype}|${text}`;
+    const voiceName = req.query.v === 'en' ? 'en-US-AnaNeural' : selectedVoice();
+    const key = `${voiceName}|${rate}|${pitch}|${hype}|${text}`;
     let audio = ttsCache.get(key);
     let fallback = false;
     if (!audio) {
       const english = req.query.v === 'en';
       try {
-        audio = await edgeTts(text, rate, hype, voiceName); // đã tự thử lại 4 lần bên trong
+        audio = await edgeTts(text, rate, hype, voiceName, pitch); // đã tự thử lại 4 lần bên trong
       } catch (err) {
         // giọng dự phòng phải ĐÚNG ngôn ngữ: từ tiếng Anh dùng Google tiếng Anh, Google cũng lỗi thì bỏ câu (không đọc sai)
         console.warn(`[giọng dự phòng] Edge lỗi 4 lần (${voiceName}), đọc bằng Google ${english ? 'tiếng Anh' : 'tiếng Việt'}: "${text.slice(0, 60)}"`, err instanceof Error ? err.message : err);

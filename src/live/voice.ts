@@ -99,7 +99,8 @@ class Voice {
   }
 
   private urlOf(p: { who: Who; hype: boolean; text: string }) {
-    const v = p.who === 'F' ? '&v=f' : p.who === 'E' ? '&v=en' : '';
+    // Một giáo viên: mọi đoạn tiếng Việt theo TTS_VOICE trên server, kể cả nhãn F: cũ.
+    const v = p.who === 'E' ? '&v=en' : '';
     return `/api/tts?rate=${this.rate}${p.hype ? '&hype=1' : ''}${v}&text=${encodeURIComponent(p.text)}`;
   }
 

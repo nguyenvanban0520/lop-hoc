@@ -9,6 +9,7 @@ settings-english.json
 .npm-cache/
 data-demo/
 data-english/
+music-uploads/
 
 # nhạc nền: file lớn, có thể có bản quyền, không đưa lên git
 public/assets/audio/

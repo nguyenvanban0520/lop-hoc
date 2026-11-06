@@ -28,6 +28,8 @@ export function useLiveEvents(handlers: LiveHandlers) {
     const connect = () => {
       source = new EventSource(IS_STAGE ? `/api/tiktok/events?stage=${STAGE_ID}` : '/api/tiktok/events');
       on('status', (d) => ref.current.onStatus?.(d));
+      on('ttsvoice', (d) => ref.current.onVoice?.(d));
+      on('music', (d) => ref.current.onMusic?.(d));
       on('chat', (d) => ref.current.onChat?.(d));
       on('gift', (d) => ref.current.onGift?.(d));
       on('member', (d) => ref.current.onMember?.(d));
